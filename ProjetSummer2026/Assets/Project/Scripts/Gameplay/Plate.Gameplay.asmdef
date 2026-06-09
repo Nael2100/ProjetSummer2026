@@ -1,0 +1,16 @@
+{
+    "name": "Plate.Gameplay",
+    "rootNamespace": "Plate.Gameplay",
+    "references": [
+        "GUID:2d6e3cfd26bde564daacf1c40af9221f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
