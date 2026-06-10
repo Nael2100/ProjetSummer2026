@@ -9,9 +9,11 @@ namespace Plate.Gameplay.Phases.UI
     {
         [SerializeField] private ChoicePhase phase;
         [SerializeField] private List<ChoiceIngredientUI> ingredientsChoiceUI;
+        [SerializeField] private ChoiceTimerUI timerUI;
         private void Awake()
         {
             phase.DisplayChoicesEvent += DisplayIngredientsUI;
+            phase.TimerStartedEvent += StartTimerUI;
         }
 
         private void DisplayIngredientsUI(int index, BaseIngredient ingredient)
@@ -20,9 +22,14 @@ namespace Plate.Gameplay.Phases.UI
             {
                 ChoiceIngredientUI currentUI = ingredientsChoiceUI[index];
                 currentUI.Display(ingredient);
-                //currentUI.button.onClick.RemoveAllListeners();
-                //currentUI.button.onClick.AddListener(phase.AddIngredientToInventory(index));
+                currentUI.button.onClick.RemoveAllListeners();
+                currentUI.button.onClick.AddListener(() => phase.AddIngredientToInventory(index));
             }
+        }
+
+        private void StartTimerUI()
+        {
+            timerUI.StartTimer();
         }
     }
 }

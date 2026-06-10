@@ -7,5 +7,6 @@ namespace Plate.Core.Scriptable.Player
     public class PlayerData : ScriptableObject
     {
         public int inventorySize = 4;
+        public float choiceTime = 5f;
     }
 }

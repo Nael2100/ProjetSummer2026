@@ -6,13 +6,14 @@ using UnityEngine;
 
 namespace Plate.Gameplay.Player
 {
-    public class Player : MonoBehaviour
+    public class PlayerRef : MonoBehaviour
     {
-        public static Player instance { get; private set; }
+        public static PlayerRef instance;
         
         [SerializeField] private PlayerData data;
         private List<BaseIngredient> Inventory = new List<BaseIngredient>();
         private int InventorySize;
+        private float ChoiceTimerDuration;
         
         private void Awake()
         {
@@ -21,6 +22,7 @@ namespace Plate.Gameplay.Player
                 instance = this;
             }
             InventorySize = data.inventorySize;
+            ChoiceTimerDuration = data.choiceTime;
         }
 
         public bool AddToInventory(BaseIngredient ingredient)
@@ -31,6 +33,11 @@ namespace Plate.Gameplay.Player
                 return true;
             }
             return false;
+        }
+
+        public float ReturnChoiceTimerDuration()
+        {
+            return ChoiceTimerDuration;
         }
     }
 }

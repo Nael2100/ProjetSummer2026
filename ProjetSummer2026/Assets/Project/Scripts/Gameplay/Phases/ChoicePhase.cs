@@ -4,6 +4,7 @@ using Plate.Gameplay.Ingredients;
 using Unity.Plastic.Newtonsoft.Json.Serialization;
 using UnityEngine;
 using UnityEngine.Events;
+using Action = System.Action;
 
 namespace Plate.Gameplay.Phases
 {
@@ -11,10 +12,18 @@ namespace Plate.Gameplay.Phases
     {
         [SerializeField] private int choices;
         [SerializeField] private IngredientsLibrary ingredientsLibrary;
+        [SerializeField] private ChoicePhaseTimer timer;
         
         private List<BaseIngredient> currentIngredients;
         
-        public event System.Action<int,BaseIngredient> DisplayChoicesEvent; 
+        public event System.Action<int,BaseIngredient> DisplayChoicesEvent;
+        public event Action TimerStartedEvent;
+
+        private void Awake()
+        {
+            timer.OnTimerEnd += AutoSelect;
+        }
+
         public override void OnPhaseBegin()
         {
             base.OnPhaseBegin();
@@ -36,6 +45,8 @@ namespace Plate.Gameplay.Phases
                 currentIngredients.Add(ingredientsLibrary.ReturnIngredient());
                 DisplayChoices(i);
             }
+            timer.StartTimer();
+            TimerStartedEvent?.Invoke();
         }
 
         private void DisplayChoices(int index)
@@ -43,11 +54,24 @@ namespace Plate.Gameplay.Phases
             DisplayChoicesEvent?.Invoke(index, currentIngredients[index]);
         }
 
-        public UnityAction AddIngredientToInventory(int index)
+        public void AddIngredientToInventory(int index)
         {
-            playerRef.AddToInventory(currentIngredients[index]);
-            SelectIngredients();
-            return null;
+            if (PlayerRef.AddToInventory(currentIngredients[index]))
+            {
+                SelectIngredients();
+            }
+            else
+            {
+                AskToChangePhase();
+            }
+        }
+
+        private void AutoSelect()
+        {
+            int index = UnityEngine.Random.Range(0, currentIngredients.Count);
+            {
+                AddIngredientToInventory(index);
+            }
         }
     }
 }

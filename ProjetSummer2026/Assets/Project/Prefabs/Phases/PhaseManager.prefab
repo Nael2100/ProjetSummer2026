@@ -45,6 +45,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Plate.Gameplay::Plate.Gameplay.Phases.OrderPhase
   phaseUI: {fileID: 0}
+--- !u!1 &2673448265149051582
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1339566632758082307}
+  - component: {fileID: 4073980733304977481}
+  m_Layer: 0
+  m_Name: ChoicePhaseTimer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1339566632758082307
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2673448265149051582}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7354394270840434500}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4073980733304977481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2673448265149051582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a22cbdbe4cc84bfc8068ccba6b492430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Plate.Gameplay::Plate.Gameplay.Phases.ChoicePhaseTimer
 --- !u!1 &3308866045093812309
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,7 +163,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1339566632758082307}
   m_Father: {fileID: 3780927056570726683}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6170499004118990631
@@ -135,6 +180,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Plate.Gameplay::Plate.Gameplay.Phases.ChoicePhase
   phaseUI: {fileID: 0}
+  choices: 3
+  ingredientsLibrary: {fileID: 0}
+  timer: {fileID: 4073980733304977481}
 --- !u!1 &3566069879455540355
 GameObject:
   m_ObjectHideFlags: 0

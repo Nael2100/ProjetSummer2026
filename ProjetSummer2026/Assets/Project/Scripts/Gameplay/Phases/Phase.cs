@@ -1,4 +1,5 @@
 using System;
+using Plate.Gameplay.Player;
 using UnityEngine;
 
 namespace Plate.Gameplay.Phases
@@ -9,12 +10,14 @@ namespace Plate.Gameplay.Phases
         
         public event Action<Phase> OnPhaseBeginEvent; 
         public event Action<Phase> OnPhaseEndEvent;
+        
+        public virtual event Action<Phase> AskToChangePhaseEvent;
 
-        protected Player.Player playerRef;
-        protected private void Awake()
+        protected Player.PlayerRef PlayerRef;
+        private protected void Start()
         {
             phaseUI.SetActive(false);
-            //playerRef = Player.Player.instance;
+            PlayerRef = PlayerRef.instance;
         }
 
         public virtual void OnPhaseBegin()
@@ -27,6 +30,11 @@ namespace Plate.Gameplay.Phases
         {
             OnPhaseEndEvent?.Invoke(this);
             phaseUI.SetActive(false);
+        }
+
+        protected void AskToChangePhase()
+        {
+            AskToChangePhaseEvent?.Invoke(this);
         }
     }
 }

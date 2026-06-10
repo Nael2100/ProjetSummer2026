@@ -14,6 +14,10 @@ namespace Plate.Gameplay.Phases
         {
             CurrentPhaseIndex = 0;
             CurrentPhase = phasesInOrder[CurrentPhaseIndex];
+            foreach (Phase phase in phasesInOrder)
+            {
+                phase.AskToChangePhaseEvent += CheckCanChangePhase;
+            }
             CurrentPhase.OnPhaseBegin();
         }
 
@@ -27,6 +31,14 @@ namespace Plate.Gameplay.Phases
             }
             CurrentPhase = phasesInOrder[CurrentPhaseIndex];
             CurrentPhase.OnPhaseBegin();
+        }
+
+        private void CheckCanChangePhase(Phase phase)
+        {
+            if (CurrentPhase == phase)
+            {
+                NextPhase();
+            }
         }
     }
 }
