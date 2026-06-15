@@ -28,6 +28,7 @@ namespace Plate.Gameplay.Phases
         {
             base.OnPhaseBegin();
             Debug.Log("ChoicePhaseStart");
+            ResetIngredients();
             SelectIngredients();
         }
 
@@ -37,8 +38,18 @@ namespace Plate.Gameplay.Phases
             Debug.Log("ChoicePhaseEnd");
         }
 
+        private void ResetIngredients()
+        {
+            ingredientsLibrary.ClearIngredients();
+            PlayerRef.EmptyInventory();
+        }
+
         private void SelectIngredients()
         {
+            if (!activePhase)
+            {
+                return;
+            }
             currentIngredients = new List<BaseIngredient>();
             for (int i = 0; i < choices; i++)
             {

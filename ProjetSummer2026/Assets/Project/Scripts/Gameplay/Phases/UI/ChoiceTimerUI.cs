@@ -28,18 +28,15 @@ namespace Plate.Gameplay.Phases.UI
         public void EndTimer()
         {
             Debug.Log("EndTimer");
-            timerImage.gameObject.SetActive(false);
         }
 
         private void UpdateTimer(bool active, float value)
         {
-            Debug.Log(value);
             if (active)
             {
                 timerImage.fillAmount = value;
             }
-
-            if (value <= 0.01)
+            if (value <= 0)
             {
                 EndTimer();
             }

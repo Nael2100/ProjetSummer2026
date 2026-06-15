@@ -4,6 +4,7 @@ namespace Plate.Gameplay.Phases
 {
     public class OrderPhase : Phase
     {
+        
         public override void OnPhaseBegin()
         {
             base.OnPhaseBegin();

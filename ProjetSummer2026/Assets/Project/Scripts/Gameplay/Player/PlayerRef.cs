@@ -25,11 +25,20 @@ namespace Plate.Gameplay.Player
             ChoiceTimerDuration = data.choiceTime;
         }
 
+        public void EmptyInventory()
+        {
+            Inventory.Clear();
+        }
+
         public bool AddToInventory(BaseIngredient ingredient)
         {
             if (Inventory.Count < InventorySize)
             {
                 Inventory.Add(ingredient);
+                if (Inventory.Count == InventorySize)
+                {
+                    return false;
+                }
                 return true;
             }
             return false;
@@ -38,6 +47,11 @@ namespace Plate.Gameplay.Player
         public float ReturnChoiceTimerDuration()
         {
             return ChoiceTimerDuration;
+        }
+
+        public List<BaseIngredient> GetInventory()
+        {
+            return Inventory;
         }
     }
 }

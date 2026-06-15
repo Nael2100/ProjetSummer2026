@@ -14,6 +14,7 @@ namespace Plate.Gameplay.Phases
         public virtual event Action<Phase> AskToChangePhaseEvent;
 
         protected Player.PlayerRef PlayerRef;
+        protected bool activePhase;
         private protected void Start()
         {
             phaseUI.SetActive(false);
@@ -22,12 +23,14 @@ namespace Plate.Gameplay.Phases
 
         public virtual void OnPhaseBegin()
         {
+            activePhase = true;
             OnPhaseBeginEvent?.Invoke(this);
             phaseUI.SetActive(true);
         }
 
         public virtual void OnPhaseEnd()
         {
+            activePhase = false;
             OnPhaseEndEvent?.Invoke(this);
             phaseUI.SetActive(false);
         }
