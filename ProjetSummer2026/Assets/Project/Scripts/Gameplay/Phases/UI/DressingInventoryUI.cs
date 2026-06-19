@@ -41,7 +41,7 @@ namespace Plate.Gameplay.Phases.UI
                 ingredient.transform.SetParent(inventoryIngredientsSpots[index].transform);
                 ingredient.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
                 ingredient.SetBasePosition(ingredient.transform.position);
-                ingredient.SetSlot(inventoryIngredientsSpots[index].GetComponent<PlateSlot>());
+                ingredient.SetInventorySlot(inventoryIngredientsSpots[index].GetComponent<PlateSlot>());
             }
         }
     }

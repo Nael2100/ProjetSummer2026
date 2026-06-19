@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1849790093888279866}
   - component: {fileID: 6502903491311736515}
   - component: {fileID: 5158461151097750107}
-  - component: {fileID: 4604016480225240873}
+  - component: {fileID: 4802775220960642872}
   m_Layer: 5
   m_Name: IngredientTest
   m_TagString: Untagged
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4604016480225240873
+--- !u!114 &4802775220960642872
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,14 +85,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 4753145099901527300}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6d6ce1a307d401ea81764acb79f1e31, type: 3}
+  m_Script: {fileID: 11500000, guid: 70f79596a9ea41d8a17dd45eda8f73b2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Plate.Gameplay::Plate.Gameplay.Ingredients.BaseIngredient
+  m_EditorClassIdentifier: Plate.Gameplay::Plate.Gameplay.Ingredients.IngredientVariants.SampleIngredient
   dataRef: {fileID: 11400000, guid: e7a8099f4919d254eaed89fa4044d7de, type: 2}
-  availableSlots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  availableSlots: []

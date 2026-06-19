@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Plate.Core.Scriptable.Player;
 using Plate.Gameplay.Ingredients;
+using Plate.Gameplay.Orders;
 using UnityEngine;
 
 namespace Plate.Gameplay.Player
@@ -14,6 +15,7 @@ namespace Plate.Gameplay.Player
         private List<BaseIngredient> Inventory = new List<BaseIngredient>();
         private int InventorySize;
         private float ChoiceTimerDuration;
+        private BaseOrder currentOrder;
         
         private void Awake()
         {
@@ -52,6 +54,11 @@ namespace Plate.Gameplay.Player
         public List<BaseIngredient> GetInventory()
         {
             return Inventory;
+        }
+
+        public void SetOrder(BaseOrder order)
+        {
+            currentOrder = order;
         }
     }
 }

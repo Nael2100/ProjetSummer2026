@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Plate.Gameplay.Ingredients;
+using Plate.Gameplay.Player;
 using UnityEngine;
 
 namespace Plate.Gameplay.Phases.UI
@@ -9,20 +10,40 @@ namespace Plate.Gameplay.Phases.UI
     {
         [SerializeField] private DressingPhase phase;
         [SerializeField] private DressingInventoryUI inventory;
+        [SerializeField] private DressingBookUI dressingBook;
 
         private void Awake()
         {
-            phase.DisplayUI += DisplayUI;
+            phase.OnPhaseBeginEvent += DisplayUI;
+            phase.OnPhaseEndEvent += UnSetUpBook;
         }
 
-        private void DisplayUI(List<BaseIngredient> ingredients)
+        private void DisplayUI(Phase codePhase)
         {
-            DisplayInventory(ingredients);
+            if (codePhase == phase)
+            {
+                DisplayInventory(PlayerRef.instance.GetInventory());
+                SetUpBook();
+            }
+            
         }
 
         private void DisplayInventory(List<BaseIngredient> ingredients)
         {
             inventory.DisplayInventory(ingredients);
+        }
+
+        private void SetUpBook()
+        {
+            dressingBook.AssociateIngredients();
+        }
+
+        private void UnSetUpBook(Phase codePhase)
+        {
+            if (codePhase == phase)
+            {
+                dressingBook.DeassociateIngredients();
+            }
         }
         
     }

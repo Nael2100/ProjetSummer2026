@@ -10,7 +10,7 @@ namespace Plate.Gameplay.Phases
         private int CurrentPhaseIndex = 0;
         private Phase CurrentPhase;
 
-        private void Awake()
+        private void Start()
         {
             CurrentPhaseIndex = 0;
             CurrentPhase = phasesInOrder[CurrentPhaseIndex];

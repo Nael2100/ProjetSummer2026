@@ -9,12 +9,10 @@ namespace Plate.Gameplay.Phases
     public class DressingPhase : Phase
     {
         [SerializeField] private Plate plate;
-        public event Action<List<BaseIngredient>> DisplayUI;
         public override void OnPhaseBegin()
         {
             base.OnPhaseBegin();
             Debug.Log("DressingPhaseStart");
-            DisplayUI?.Invoke(PlayerRef.GetInventory());
             foreach (PlateSlot slot in plate.GetSlots())
             {
                 foreach (BaseIngredient ingredient in PlayerRef.GetInventory())

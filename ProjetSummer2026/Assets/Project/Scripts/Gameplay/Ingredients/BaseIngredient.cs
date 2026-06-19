@@ -8,16 +8,17 @@ using UnityEngine.EventSystems;
 
 namespace Plate.Gameplay.Ingredients
 {
-    public class BaseIngredient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public abstract class BaseIngredient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
     {
         [SerializeField] private BaseIngredientData dataRef;
-        [SerializeField] private List<PlateSlot> availableSlots;
+        private List<PlateSlot> availableSlots;
+        private PlateSlot inventorySlot;
         private PlateSlot tempSlot;
-
+        private PlateSlot baseSlot;
         private Vector2 basePosition;
-
         private bool isBeingDragged;
 
+        public event Action<BaseIngredient> OnClicked;
         private void Awake()
         {
             availableSlots = new List<PlateSlot>();
@@ -27,7 +28,7 @@ namespace Plate.Gameplay.Ingredients
         {
             basePosition = position;
         }
-        
+
         public Sprite ReturnImage()
         {
             return dataRef.sprite;
@@ -43,18 +44,24 @@ namespace Plate.Gameplay.Ingredients
             availableSlots.Add(slot);
         }
 
+        public void SetInventorySlot(PlateSlot slot)
+        {
+            availableSlots.Add(slot);
+            inventorySlot = slot;
+            baseSlot = slot;
+            slot.SetIngredient(this, true);
+        }
+
         public void OnBeginDrag(PointerEventData eventData)
         {
             isBeingDragged = true;
             tempSlot = null;
             StopAllCoroutines();
             StartCoroutine(CheckSlots(eventData));
-            Debug.Log("OnBeginDrag");
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            Debug.Log("OnDrag");
             if (tempSlot == null)
             {
                 transform.position = eventData.position;
@@ -62,49 +69,49 @@ namespace Plate.Gameplay.Ingredients
             else
             {
                 transform.position = tempSlot.transform.position;
-                basePosition = tempSlot.transform.position;
             }
-            
-            
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
             isBeingDragged = false;
-            if (tempSlot == null)
+            if (tempSlot != null)
             {
-                transform.position = basePosition;
+                basePosition = tempSlot.transform.position;
+                baseSlot = tempSlot;
             }
-            else
+            transform.position = basePosition;
+            baseSlot.SetIngredient(this, true);
+            if (baseSlot == inventorySlot)
             {
-                transform.position = tempSlot.transform.position;
+                transform.localPosition = Vector2.zero;
             }
-            Debug.Log("OnEndDrag");
+            
         }
 
         IEnumerator CheckSlots(PointerEventData eventData)
         {
+            tempSlot = null;
+            baseSlot.SetIngredient(this, false);
             List<PlateSlot> potentials = new List<PlateSlot>();
-            
             while (isBeingDragged)
             {
                 potentials.Clear();
                 foreach (PlateSlot slot in availableSlots)
                 {
-                    if (slot != tempSlot )
+                    if (slot != baseSlot)
                     {
                         if (slot.ReturnSnap(eventData.position))
                         {
                             potentials.Add(slot);
                         }
                     }
-                    
+
                 }
 
                 if (potentials.Count > 1)
                 {
-                    tempSlot = potentials[0];
-                    float closestDistance = Vector2.Distance(eventData.position, tempSlot.transform.position);
+                    float closestDistance = Vector2.Distance(eventData.position, baseSlot.transform.position);
                     foreach (PlateSlot slot in potentials)
                     {
                         float newDistance = Vector2.Distance(eventData.position, slot.transform.position);
@@ -121,11 +128,18 @@ namespace Plate.Gameplay.Ingredients
                 }
                 else if (potentials.Count == 0)
                 {
+                    Debug.Log("no potential found");
                     tempSlot = null;
                 }
                 yield return new WaitForSeconds(0.2f);
             }
         }
-        
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            OnClicked?.Invoke(this);
+        }
+
+        public abstract int CalculatePoints();
     }
 }
