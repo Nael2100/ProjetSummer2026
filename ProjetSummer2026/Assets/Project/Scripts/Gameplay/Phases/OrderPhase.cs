@@ -26,13 +26,8 @@ namespace Plate.Gameplay.Phases
         private void SelectOrder()
         {
             order = ordersLibrary.ReturnRandomOrder();
-            PlayerRef.SetOrder(order);
+            PhasePlayerRef.SetOrder(order);
             OrderChanged?.Invoke(order);
-        }
-
-        public void OrderRead()
-        {
-            AskToChangePhase();
         }
     }
 }

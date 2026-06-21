@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Plate.Gameplay.Player;
 using UnityEngine;
 
 namespace Plate.Gameplay.Phases
 {
     public class PhaseManager : MonoBehaviour
     {
+        [SerializeField] private PlayerRef player;
         [SerializeField] private List<Phase> phasesInOrder;
         private int CurrentPhaseIndex = 0;
         private Phase CurrentPhase;
@@ -17,11 +19,12 @@ namespace Plate.Gameplay.Phases
             foreach (Phase phase in phasesInOrder)
             {
                 phase.AskToChangePhaseEvent += CheckCanChangePhase;
+                phase.SetPlayerRef(player,this);
             }
             CurrentPhase.OnPhaseBegin();
         }
 
-        public void NextPhase()
+        private void NextPhase()
         {
             CurrentPhase.OnPhaseEnd();
             CurrentPhaseIndex += 1;
@@ -33,7 +36,7 @@ namespace Plate.Gameplay.Phases
             CurrentPhase.OnPhaseBegin();
         }
 
-        private void CheckCanChangePhase(Phase phase)
+        public void CheckCanChangePhase(Phase phase)
         {
             if (CurrentPhase == phase)
             {

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Plate.Gameplay.Ingredients;
 using Plate.Gameplay.Player;
 using TMPro;
@@ -12,17 +13,17 @@ namespace Plate.Gameplay.Phases.UI
         [SerializeField] private DressingBookIngredientTastesUI TastesUI;
         [SerializeField] private DressingBookIngredientEffectsUI EffectsUI;
 
-        public void AssociateIngredients()
+        public void AssociateIngredients(List<BaseIngredient> ingredients)
         {
-            foreach (BaseIngredient ingredient in PlayerRef.instance.GetInventory())
+            foreach (BaseIngredient ingredient in ingredients)
             {
                 ingredient.OnClicked += DisplayIngredient;
             }
         }
 
-        public void DeassociateIngredients()
+        public void DeassociateIngredients(List<BaseIngredient> ingredients)
         {
-            foreach (BaseIngredient ingredient in PlayerRef.instance.GetInventory())
+            foreach (BaseIngredient ingredient in ingredients)
             {
                 ingredient.OnClicked -= DisplayIngredient;
             }

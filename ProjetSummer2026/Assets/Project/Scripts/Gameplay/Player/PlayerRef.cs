@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Plate.Core.Scriptable.Grade;
 using Plate.Core.Scriptable.Player;
 using Plate.Gameplay.Ingredients;
 using Plate.Gameplay.Orders;
@@ -9,20 +10,17 @@ namespace Plate.Gameplay.Player
 {
     public class PlayerRef : MonoBehaviour
     {
-        public static PlayerRef instance;
-        
         [SerializeField] private PlayerData data;
         private List<BaseIngredient> Inventory = new List<BaseIngredient>();
         private int InventorySize;
         private float ChoiceTimerDuration;
         private BaseOrder currentOrder;
+        private GradeData currentGrade;
+        
+        private int starsAmount;
         
         private void Awake()
         {
-            if (instance == null)
-            {
-                instance = this;
-            }
             InventorySize = data.inventorySize;
             ChoiceTimerDuration = data.choiceTime;
         }
@@ -46,7 +44,7 @@ namespace Plate.Gameplay.Player
             return false;
         }
 
-        public float ReturnChoiceTimerDuration()
+        public float GetChoiceTimerDuration()
         {
             return ChoiceTimerDuration;
         }
@@ -59,6 +57,33 @@ namespace Plate.Gameplay.Player
         public void SetOrder(BaseOrder order)
         {
             currentOrder = order;
+        }
+
+        public BaseOrder GetOrder()
+        {
+            return currentOrder;
+        }
+
+        public void SetGrade(GradeData grade)
+        {
+            Debug.Log(grade);
+            currentGrade = grade;
+            
+        }
+
+        public GradeData GetGrade()
+        {
+            return currentGrade;
+        }
+
+        public void AddStars(int stars)
+        {
+            starsAmount += stars;
+        }
+
+        public int GetStars()
+        {
+            return starsAmount;
         }
     }
 }

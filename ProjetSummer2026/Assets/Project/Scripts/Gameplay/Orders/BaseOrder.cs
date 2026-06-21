@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using Plate.Core.Scriptable.Order;
+using Plate.Gameplay.Ingredients;
 using UnityEngine;
 
 namespace Plate.Gameplay.Orders
 {
-    public class BaseOrder : MonoBehaviour
+    public abstract class BaseOrder : MonoBehaviour
     {
         [SerializeField] private BaseOrderData data;
 
@@ -22,5 +23,7 @@ namespace Plate.Gameplay.Orders
         {
             return data.Effects;
         }
+
+        public abstract List<int> CalculatePoints(List<BaseIngredient> ingredients);
     }
 }

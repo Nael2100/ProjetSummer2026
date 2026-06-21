@@ -6,25 +6,27 @@ using UnityEngine;
 
 namespace Plate.Gameplay.Phases.UI
 {
-    public class DressingPhaseUI : MonoBehaviour
+    public class DressingPhaseUI : PhaseUI
     {
         [SerializeField] private DressingPhase phase;
         [SerializeField] private DressingInventoryUI inventory;
         [SerializeField] private DressingBookUI dressingBook;
 
-        private void Awake()
+        protected override void Awake()
         {
-            phase.OnPhaseBeginEvent += DisplayUI;
-            phase.OnPhaseEndEvent += UnSetUpBook;
+            base.Awake();
+            basephase = phase;
+            phase.OnDisplayInventory += DisplayUI;
+            phase.OnUndisplayInventory += UnSetUpBook;
+            
         }
 
-        private void DisplayUI(Phase codePhase)
+        private void DisplayUI(List<BaseIngredient> ingredients)
         {
-            if (codePhase == phase)
-            {
-                DisplayInventory(PlayerRef.instance.GetInventory());
-                SetUpBook();
-            }
+            changePhaseButton.gameObject.SetActive(false);
+            DisplayInventory(ingredients); 
+            SetUpBook(ingredients);
+            SetButton();
             
         }
 
@@ -33,17 +35,14 @@ namespace Plate.Gameplay.Phases.UI
             inventory.DisplayInventory(ingredients);
         }
 
-        private void SetUpBook()
+        private void SetUpBook(List<BaseIngredient> ingredients)
         {
-            dressingBook.AssociateIngredients();
+            dressingBook.AssociateIngredients(ingredients);
         }
 
-        private void UnSetUpBook(Phase codePhase)
+        private void UnSetUpBook(List<BaseIngredient> ingredients)
         {
-            if (codePhase == phase)
-            {
-                dressingBook.DeassociateIngredients();
-            }
+            dressingBook.DeassociateIngredients(ingredients);
         }
         
     }

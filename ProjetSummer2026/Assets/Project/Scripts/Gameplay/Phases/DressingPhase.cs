@@ -9,23 +9,28 @@ namespace Plate.Gameplay.Phases
     public class DressingPhase : Phase
     {
         [SerializeField] private Plate plate;
+        public event Action<List<BaseIngredient>> OnDisplayInventory;
+        public event Action<List<BaseIngredient>> OnUndisplayInventory;
         public override void OnPhaseBegin()
         {
             base.OnPhaseBegin();
             Debug.Log("DressingPhaseStart");
             foreach (PlateSlot slot in plate.GetSlots())
             {
-                foreach (BaseIngredient ingredient in PlayerRef.GetInventory())
+                slot.ResetOccupation();
+                foreach (BaseIngredient ingredient in PhasePlayerRef.GetInventory())
                 {
                     ingredient.SetSlot(slot);
                 }
             }
+            OnDisplayInventory?.Invoke(PhasePlayerRef.GetInventory());
         }
 
         public override void OnPhaseEnd()
         {
             base.OnPhaseEnd();
             Debug.Log("DressingPhaseEnd");
+            OnUndisplayInventory?.Invoke(PhasePlayerRef.GetInventory());
         }
     }
 }

@@ -11,9 +11,8 @@ namespace Plate.Gameplay.Phases.UI
         [SerializeField] private List<GameObject> inventoryIngredientsSpots;
 
         private int nbIngredients;
-
-        int currentIndex = 0;
-        int maxIndex = 0;
+        
+        private int maxIndex;
 
         private void Awake()
         {
@@ -22,7 +21,6 @@ namespace Plate.Gameplay.Phases.UI
 
         public void DisplayInventory(List<BaseIngredient> ingredients)
         {
-            currentIndex = 0;
             maxIndex = ingredients.Count;
             for (int i = 0; i < nbIngredients; i++)
             {

@@ -13,18 +13,20 @@ namespace Plate.Gameplay.Phases
         
         public virtual event Action<Phase> AskToChangePhaseEvent;
 
-        protected PlayerRef PlayerRef;
+        protected PlayerRef PhasePlayerRef;
         protected bool activePhase;
-        private protected void Awake()
+        protected virtual void Awake()
         {
             phaseUI.SetActive(false);
-            PlayerRef = PlayerRef.instance;
         }
 
+        public void SetPlayerRef(PlayerRef newRef, PhaseManager managerCheck)
+        {
+            PhasePlayerRef = newRef;
+        }
         public virtual void OnPhaseBegin()
         {
             activePhase = true;
-            PlayerRef = PlayerRef.instance;
             OnPhaseBeginEvent?.Invoke(this);
             phaseUI.SetActive(true);
         }

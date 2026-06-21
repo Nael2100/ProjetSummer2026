@@ -16,19 +16,23 @@ namespace Plate.Gameplay.Phases
         private float timerDuration;
         
         
-        public void StartTimer()
+        public void StartTimer(float duration)
         {
-            SetUpTimer();
+            SetUpTimer(duration);
             timerActive = true;
             StopAllCoroutines();
             StartCoroutine(Timer());
         }
 
-        private void SetUpTimer()
+        private void SetUpTimer(float duration)
         {
-            
-            timerDuration = PlayerRef.instance.ReturnChoiceTimerDuration();
+            timerDuration = duration;
             leftTime = timerDuration;
+        }
+
+        public void StopTimer()
+        {
+            timerActive = false;
         }
 
         IEnumerator Timer()

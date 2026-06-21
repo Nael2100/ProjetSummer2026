@@ -8,17 +8,20 @@ using UnityEngine.UI;
 
 namespace Plate.Gameplay.Phases.UI
 {
-    public class OrderPhaseUI : MonoBehaviour
+    public class OrderPhaseUI : PhaseUI
     {
         [SerializeField] private OrderPhase phase;
         [SerializeField] private TextMeshProUGUI titleText;
         [SerializeField] private TextMeshProUGUI descriptionText;
         [SerializeField] private List<TextMeshProUGUI> effectTexts;
-        [SerializeField] private Button continueButton;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+            basephase = phase;
+            changePhaseButton.gameObject.SetActive(false);
             phase.OrderChanged += DisplayOrder;
+            SetButton();
         }
 
         private void DisplayOrder(BaseOrder order)
@@ -37,11 +40,7 @@ namespace Plate.Gameplay.Phases.UI
                     effectTexts[i].text = "";
                 }
             }
-        }
-
-        public void Continue()
-        {
-            phase.OrderRead();
+            SetButton();
         }
     }
 }

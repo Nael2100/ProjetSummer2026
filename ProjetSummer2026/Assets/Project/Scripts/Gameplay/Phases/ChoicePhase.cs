@@ -18,9 +18,11 @@ namespace Plate.Gameplay.Phases
         
         public event System.Action<int,BaseIngredient> DisplayChoicesEvent;
         public event Action TimerStartedEvent;
+        public event Action AllIngredientsSelectedEvent;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             timer.OnTimerEnd += AutoSelect;
         }
 
@@ -41,7 +43,7 @@ namespace Plate.Gameplay.Phases
         private void ResetIngredients()
         {
             ingredientsLibrary.ClearIngredients();
-            PlayerRef.EmptyInventory();
+            PhasePlayerRef.EmptyInventory();
         }
 
         private void SelectIngredients()
@@ -56,7 +58,7 @@ namespace Plate.Gameplay.Phases
                 currentIngredients.Add(ingredientsLibrary.ReturnIngredient());
                 DisplayChoices(i);
             }
-            timer.StartTimer();
+            timer.StartTimer(PhasePlayerRef.GetChoiceTimerDuration());
             TimerStartedEvent?.Invoke();
         }
 
@@ -67,13 +69,14 @@ namespace Plate.Gameplay.Phases
 
         public void AddIngredientToInventory(int index)
         {
-            if (PlayerRef.AddToInventory(currentIngredients[index]))
+            if (PhasePlayerRef.AddToInventory(currentIngredients[index]))
             {
                 SelectIngredients();
             }
             else
             {
-                AskToChangePhase();
+                AllIngredientsSelectedEvent?.Invoke();
+                timer.StopTimer();
             }
         }
 

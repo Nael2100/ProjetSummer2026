@@ -7,6 +7,11 @@ namespace Plate.Gameplay.Phases
     {
         private BaseIngredient ingredient;
         private bool occupied = false;
+
+        public void ResetOccupation()
+        {
+            occupied = false;
+        }
         public bool ReturnSnap(Vector2 pos)
         {
             if (!occupied)
