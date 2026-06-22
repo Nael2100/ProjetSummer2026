@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d17a4b0aaf45da9a8666c67db70ca6, type: 3}
+  m_Name: IngredientTomatoData
+  m_EditorClassIdentifier: Plate.Core::Plate.Core.Scriptable.Ingredients.IngredientsDataVariants.IngredientTomatoData
+  <ingredientName>k__BackingField: Tomato
+  <description>k__BackingField: SAMPLE
+  <sprite>k__BackingField: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  <types>k__BackingField: 000000000100000002000000
+  <tasteValues>k__BackingField:
+  - <taste>k__BackingField: 1
+    <amount>k__BackingField: 2
+  - <taste>k__BackingField: 2
+    <amount>k__BackingField: 2
+  - <taste>k__BackingField: 3
+    <amount>k__BackingField: 4
+  - <taste>k__BackingField: 4
+    <amount>k__BackingField: 1
+  PointsForTomato: 1
+  PointsForCheese: 1
+  PointsForMainAcidity: -2

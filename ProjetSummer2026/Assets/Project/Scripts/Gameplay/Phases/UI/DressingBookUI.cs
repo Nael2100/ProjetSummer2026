@@ -31,7 +31,7 @@ namespace Plate.Gameplay.Phases.UI
 
         private void DisplayIngredient(BaseIngredient ingredient)
         {
-            Debug.Log(ingredient.name);
+            Debug.Log(ingredient.GetName());
         }
     }
 }

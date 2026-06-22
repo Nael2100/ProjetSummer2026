@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using Plate.Gameplay.Ingredients;
 using Plate.Gameplay.Player;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Plate.Gameplay.Phases
 {
     public class EvaluationPhase : Phase
     {
-        [SerializeField] private Plate plate;
+        [FormerlySerializedAs("plate")] [SerializeField] private PlateRef plateRef;
         private List<BaseIngredient> ingredientsToCalculate;
 
         private int ingredientsOnlyScore;
@@ -24,7 +25,7 @@ namespace Plate.Gameplay.Phases
         {
             base.OnPhaseBegin();
             Debug.Log("EvaluationPhaseStart");
-            ingredientsToCalculate = plate.ReturnBaseIngredientsOnPlate();
+            ingredientsToCalculate = plateRef.ReturnBaseIngredientsOnPlate();
             CalculateIngredientsOnlyScore();
             CalculateOrderOnlyScore();
             CalculateTotalScore();
@@ -44,7 +45,7 @@ namespace Plate.Gameplay.Phases
             ingredientsOnlyScore = 0;
             foreach (BaseIngredient ingredient in ingredientsToCalculate)
             {
-                int scoreToAdd = ingredient.CalculatePoints();
+                int scoreToAdd = ingredient.CalculatePoints(plateRef);
                 calculatedScores.Add(scoreToAdd);
                 calculatedIngredients.Add(ingredient);
                 ingredientsOnlyScore += scoreToAdd;

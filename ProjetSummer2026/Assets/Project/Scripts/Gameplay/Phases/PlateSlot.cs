@@ -16,7 +16,7 @@ namespace Plate.Gameplay.Phases
         {
             if (!occupied)
             {
-                if (Vector2.Distance(transform.position, pos) < 20f)
+                if (Vector2.Distance(transform.position, pos) < 40f)
                 {
                     return true;
                 }

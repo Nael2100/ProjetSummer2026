@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Plate.Core.Scriptable.Ingredients;
 using Plate.Gameplay.Phases;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace Plate.Gameplay.Ingredients
 {
     public abstract class BaseIngredient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
     {
-        [SerializeField] private BaseIngredientData dataRef;
+        [SerializeField] protected BaseIngredientData dataRef;
         private List<PlateSlot> availableSlots;
         private PlateSlot inventorySlot;
         private PlateSlot tempSlot;
@@ -140,6 +141,20 @@ namespace Plate.Gameplay.Ingredients
             OnClicked?.Invoke(this);
         }
 
-        public abstract int CalculatePoints();
+        public IngredientsTypes[] GetTypes()
+        {
+            return dataRef.types;
+        }
+
+        public string GetName()
+        {
+            return dataRef.ingredientName;
+        }
+
+        public TasteValue[] GetTastes()
+        {
+            return dataRef.tasteValues;
+        }
+        public abstract int CalculatePoints(PlateRef plate);
     }
 }

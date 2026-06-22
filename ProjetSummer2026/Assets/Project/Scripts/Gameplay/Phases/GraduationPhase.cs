@@ -13,6 +13,7 @@ namespace Plate.Gameplay.Phases
         [SerializeField] private int daysToObtain;
         private GradeData currentGrade;
         private int daysLeft;
+        public event Action<int, GradeData, bool, int> OnProgressionChecked; 
 
         protected override void Awake()
         {
@@ -41,6 +42,7 @@ namespace Plate.Gameplay.Phases
             Debug.Log("GraduationPhaseStart");
             daysLeft--;
             currentGrade = PhasePlayerRef.GetGrade();
+            CheckGradeProgression();
         }
 
         public override void OnPhaseEnd()
@@ -52,15 +54,23 @@ namespace Plate.Gameplay.Phases
         private void CheckGradeProgression()
         {
             int requiredStars = gradesManager.ReturnStarsNeeded(currentGrade);
+            Debug.Log(requiredStars);
             if (requiredStars > 0)
             {
                 if (PhasePlayerRef.GetStars() >= requiredStars)
                 {
+                    Debug.Log("gradeischanging");
                     PhasePlayerRef.SetGrade(gradesManager.ReturnNextGrade(currentGrade));
                     currentGrade = PhasePlayerRef.GetGrade();
                     daysLeft += daysToObtain;
+                    OnProgressionChecked?.Invoke(PhasePlayerRef.GetStars(), currentGrade, true, daysLeft);
+                }
+                else
+                {
+                    OnProgressionChecked?.Invoke(PhasePlayerRef.GetStars(), gradesManager.ReturnNextGrade(currentGrade), false,daysLeft);
                 }
             }
+            
         }
     }
 }

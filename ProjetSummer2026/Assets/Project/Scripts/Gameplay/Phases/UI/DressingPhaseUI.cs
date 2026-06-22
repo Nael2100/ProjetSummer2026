@@ -27,7 +27,6 @@ namespace Plate.Gameplay.Phases.UI
             DisplayInventory(ingredients); 
             SetUpBook(ingredients);
             SetButton();
-            
         }
 
         private void DisplayInventory(List<BaseIngredient> ingredients)
