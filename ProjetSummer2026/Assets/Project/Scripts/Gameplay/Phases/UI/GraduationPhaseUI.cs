@@ -15,6 +15,7 @@ namespace Plate.Gameplay.Phases.UI
         [SerializeField] private Image nextGradeImage;
 
         private int daysLeft;
+        private bool hasUpgraded;
         protected override void Awake()
         {
             base.Awake();
@@ -26,6 +27,7 @@ namespace Plate.Gameplay.Phases.UI
         private void DisplayProgress(int currentStars, GradeData nextGrade, bool newGrade, int newDaysLeft)
         {
             daysLeft = newDaysLeft;
+            hasUpgraded = false;
             if (newGrade)
             {
                 StartCoroutine(ProgressBar(1f, true, nextGrade, (float)currentStars/(float)nextGrade.requiredStarsToObtain));
@@ -41,7 +43,6 @@ namespace Plate.Gameplay.Phases.UI
 
         IEnumerator ProgressBar(float progress, bool newGrade=false, GradeData newGradeData=null, float newProgress=0)
         {
-            Debug.Log("Porco rosse: " + progress);
             while (progressImage.fillAmount < progress)
             {
                 progressImage.fillAmount += Time.deltaTime*0.1f;
@@ -51,11 +52,17 @@ namespace Plate.Gameplay.Phases.UI
             if (newGrade)
             {
                 progressImage.fillAmount = 0;
+                hasUpgraded = true;
                 DisplayNextGrade(newGradeData);
                 StartCoroutine(ProgressBar(newProgress));
             }
             else
             {
+                if (hasUpgraded)
+                {
+                    phase.SkillUpgrade();
+                    
+                }
                 SetButton();
             }
         }

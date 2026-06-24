@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Plate.Core.Scriptable.Ingredients;
 using Plate.Gameplay.Phases;
+using Plate.Gameplay.Phases.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -13,7 +14,7 @@ namespace Plate.Gameplay.Ingredients
     {
         [SerializeField] protected BaseIngredientData dataRef;
         private List<PlateSlot> availableSlots;
-        private PlateSlot inventorySlot;
+        private InventoryPlateSlot inventorySlot;
         private PlateSlot tempSlot;
         private PlateSlot baseSlot;
         private Vector2 basePosition;
@@ -45,9 +46,17 @@ namespace Plate.Gameplay.Ingredients
             availableSlots.Add(slot);
         }
 
-        public void SetInventorySlot(PlateSlot slot)
+        public PlateSlot GetSlot()
+        {
+            return baseSlot;
+        }
+
+        public void AddAvailableSlot(PlateSlot slot)
         {
             availableSlots.Add(slot);
+        }
+        public void SetInventorySlot(InventoryPlateSlot slot)
+        {
             inventorySlot = slot;
             baseSlot = slot;
             slot.SetIngredient(this, true);
@@ -83,8 +92,18 @@ namespace Plate.Gameplay.Ingredients
             }
             transform.position = basePosition;
             baseSlot.SetIngredient(this, true);
+            inventorySlot.ResetOccupation();
+            if (baseSlot is InventoryPlateSlot newInventorySlot)
+            {
+                if (baseSlot != inventorySlot)
+                {
+                    inventorySlot.IngredientDisconnected(this);
+                    newInventorySlot.Associate(this);
+                }
+            }
             if (baseSlot == inventorySlot)
             {
+                inventorySlot.SetOccupied();
                 transform.localPosition = Vector2.zero;
             }
             
@@ -150,7 +169,6 @@ namespace Plate.Gameplay.Ingredients
         {
             return dataRef.ingredientName;
         }
-
         public TasteValue[] GetTastes()
         {
             return dataRef.tasteValues;

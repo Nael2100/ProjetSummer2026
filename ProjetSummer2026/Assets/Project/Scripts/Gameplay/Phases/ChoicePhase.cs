@@ -19,6 +19,7 @@ namespace Plate.Gameplay.Phases
         public event System.Action<int,BaseIngredient> DisplayChoicesEvent;
         public event Action TimerStartedEvent;
         public event Action AllIngredientsSelectedEvent;
+        public event Action<BaseIngredient> OnIngredientSelected;
 
         protected override void Awake()
         {
@@ -69,7 +70,10 @@ namespace Plate.Gameplay.Phases
 
         public void AddIngredientToInventory(int index)
         {
-            if (PhasePlayerRef.AddToInventory(currentIngredients[index]))
+            BaseIngredient chosenIngredient = currentIngredients[index];
+            OnIngredientSelected?.Invoke(chosenIngredient);
+            Debug.Log("skuba");
+            if (PhasePlayerRef.AddToInventory(chosenIngredient))
             {
                 SelectIngredients();
             }
@@ -80,12 +84,16 @@ namespace Plate.Gameplay.Phases
             }
         }
 
-        private void AutoSelect()
+        private void AutoSelect(bool timerActive)
         {
-            int index = UnityEngine.Random.Range(0, currentIngredients.Count);
+            if (timerActive)
             {
-                AddIngredientToInventory(index);
+                int index = UnityEngine.Random.Range(0, currentIngredients.Count);
+                {
+                    AddIngredientToInventory(index);
+                }
             }
+            
         }
     }
 }

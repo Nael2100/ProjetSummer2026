@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d32d3adce9f42b5920d85019c76863d, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: Plate.Core::Plate.Core.Scriptable.Player.PlayerData
-  InventorySize: 4
+  inventorySize: 6
+  choiceTime: 5

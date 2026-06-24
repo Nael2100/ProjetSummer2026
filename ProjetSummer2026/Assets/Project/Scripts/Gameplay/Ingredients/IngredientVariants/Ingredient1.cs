@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace Plate.Gameplay.Ingredients.IngredientVariants
 {
-    public class IngredientTomato : BaseIngredient
+    public class Ingredient1 : BaseIngredient
     {
         
         public override int CalculatePoints(PlateRef plate)
         {
             int total = 0;
-            if (dataRef is IngredientTomatoData variantData)
+            if (dataRef is Ingredient1Data variantData)
             {
                 total += plate.PointsForIdenticalOnPlate(GetName(), variantData.PointsForTomato);
                 total += plate.PointsForTypeOnPlate(IngredientsTypes.Cheese, variantData.PointsForCheese);

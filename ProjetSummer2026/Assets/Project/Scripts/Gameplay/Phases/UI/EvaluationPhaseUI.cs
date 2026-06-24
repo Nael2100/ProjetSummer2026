@@ -18,6 +18,7 @@ namespace Plate.Gameplay.Phases.UI
         private List<EvaluationLineUI> lines = new List<EvaluationLineUI>();
         private bool readyForOrderScore;
         private bool readyForTotalScore;
+        private bool readyForSkills;
 
         protected override void Awake()
         {
@@ -25,6 +26,7 @@ namespace Plate.Gameplay.Phases.UI
             basephase = phase;
             phase.OnIngredientsCalculated += DisplayIngredientsResults;
             phase.OnOrderCalculated += DisplayOrderResults;
+            phase.OnSkillsCalculated += DisplaySkillsResults;
             phase.OnTotalCalculated += DisplayTotalResults;
             phase.OnStarsCalculated += DisplayStars;
             phase.OnPhaseBeginEvent += ResetLines;
@@ -54,9 +56,14 @@ namespace Plate.Gameplay.Phases.UI
             StartCoroutine(DisplayTotalResultsOneByOne(total));
         }
 
-        private void DisplayOrderResults(List<int> scores, int total)
+        private void DisplayOrderResults(List<int> scores,  int additional, int total)
         {
-            StartCoroutine(DisplayOrderResultsOneByeOne(scores, total));
+            StartCoroutine(DisplayOrderResultsOneByeOne(scores, additional,total));
+        }
+
+        private void DisplaySkillsResults(List<int> scores, int additional, int total)
+        {
+            StartCoroutine(DisplaySkillsResultsOneByeOne(scores, additional, total));
         }
 
         IEnumerator DisplayIngredientsResultsOneByeOne(List<BaseIngredient> ingredients, List<int> scores, int total)
@@ -90,7 +97,7 @@ namespace Plate.Gameplay.Phases.UI
             evaluationTotalUI.DisplayIngredientsOnlyScore(total);
             readyForOrderScore = true;
         }
-        IEnumerator DisplayOrderResultsOneByeOne(List<int> scores, int total)
+        IEnumerator DisplayOrderResultsOneByeOne(List<int> scores,  int additional, int total)
         {
             while (!readyForOrderScore)
             {
@@ -104,7 +111,29 @@ namespace Plate.Gameplay.Phases.UI
                 i++;
                 yield return new WaitForSeconds(1f);
             }
+            evaluationTotalUI.DisplayOrderAdditionalScore(additional);
+            yield return new WaitForSeconds(1f);
             evaluationTotalUI.DisplayOrderOnlyScore(total);
+            readyForSkills = true;
+        }
+
+        IEnumerator DisplaySkillsResultsOneByeOne(List<int> scores, int additional, int total)
+        {
+            while (!readyForSkills)
+            {
+                yield return new WaitForSeconds(0.5f);
+            }
+            int i = 0;
+            yield return new WaitForSeconds(0.5f);
+            while (i < scores.Count)
+            {
+                lines[i].DisplayEvaluationLineForSkills(scores[i]);
+                i++;
+                yield return new WaitForSeconds(1f);
+            }
+            evaluationTotalUI.DisplaySkillsAdditionalScore(additional);
+            yield return new WaitForSeconds(1f);
+            evaluationTotalUI.DisplaySkillsOnlyScore(total);
             readyForTotalScore = true;
         }
 

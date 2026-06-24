@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5bf2b5045ba4e60822451d16d9e83d2, type: 3}
+  m_Name: Skill1Data
+  m_EditorClassIdentifier: Plate.Core::Plate.Core.Scriptable.Skills.Skill1Data
+  <skillName>k__BackingField: Greenhand
+  <icon>k__BackingField: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  <description>k__BackingField: Add 1 for each Garden Ingredients
+  <pointForGardenIngredients>k__BackingField: 1

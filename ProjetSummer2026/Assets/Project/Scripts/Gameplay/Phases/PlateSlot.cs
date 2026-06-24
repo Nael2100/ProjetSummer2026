@@ -6,7 +6,7 @@ namespace Plate.Gameplay.Phases
     public class PlateSlot : MonoBehaviour
     {
         private BaseIngredient ingredient;
-        private bool occupied = false;
+        protected bool occupied = false;
 
         public void ResetOccupation()
         {

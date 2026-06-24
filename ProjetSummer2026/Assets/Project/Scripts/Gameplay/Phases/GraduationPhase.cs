@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Plate.Core.Scriptable.Grade;
 using Plate.Gameplay.Grades;
 using Plate.Gameplay.Player;
+using Plate.Gameplay.Skills;
 using UnityEngine;
 
 namespace Plate.Gameplay.Phases
@@ -10,10 +12,12 @@ namespace Plate.Gameplay.Phases
     public class GraduationPhase : Phase
     {
         [SerializeField] private GradesManager gradesManager;
+        [SerializeField] private SkillsManager skillsManager;
         [SerializeField] private int daysToObtain;
         private GradeData currentGrade;
         private int daysLeft;
-        public event Action<int, GradeData, bool, int> OnProgressionChecked; 
+        public event Action<int, GradeData, bool, int> OnProgressionChecked;
+        public event Action<GradeData, List<BaseSkill>, SkillsManager> OnSkillUpgrade;
 
         protected override void Awake()
         {
@@ -70,7 +74,11 @@ namespace Plate.Gameplay.Phases
                     OnProgressionChecked?.Invoke(PhasePlayerRef.GetStars(), gradesManager.ReturnNextGrade(currentGrade), false,daysLeft);
                 }
             }
-            
+        }
+
+        public void SkillUpgrade()
+        {
+            OnSkillUpgrade?.Invoke(currentGrade, skillsManager.SelectSkills(), skillsManager);
         }
     }
 }

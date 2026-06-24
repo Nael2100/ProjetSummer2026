@@ -25,7 +25,7 @@ namespace Plate.Gameplay.Phases.UI
             timerImage.fillAmount = 1f;
         }
 
-        public void EndTimer()
+        public void EndTimer(bool timerActive)
         {
             Debug.Log("EndTimer");
             timerImage.gameObject.SetActive(false);
@@ -39,7 +39,7 @@ namespace Plate.Gameplay.Phases.UI
             }
             if (value <= 0)
             {
-                EndTimer();
+                EndTimer(false);
             }
         }
     }

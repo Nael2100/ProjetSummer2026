@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Plate.Gameplay.Ingredients;
 using Plate.Gameplay.Player;
+using Plate.Gameplay.Skills;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,15 +11,18 @@ namespace Plate.Gameplay.Phases
 {
     public class EvaluationPhase : Phase
     {
-        [FormerlySerializedAs("plate")] [SerializeField] private PlateRef plateRef;
+        [SerializeField] private PlateRef plateRef;
+        [SerializeField] private SkillsManager skillsManager;
         private List<BaseIngredient> ingredientsToCalculate;
 
         private int ingredientsOnlyScore;
         private int orderOnlyScore;
+        private int skillsOnlyScore;
         private int totalScore;
         
         public event Action<List<BaseIngredient>,List<int>,int> OnIngredientsCalculated;
-        public event Action<List<int>,int> OnOrderCalculated;
+        public event Action<List<int>,int, int> OnOrderCalculated;
+        public event Action<List<int>, int, int> OnSkillsCalculated; 
         public event Action<int> OnTotalCalculated; 
         public event Action<int> OnStarsCalculated;
         public override void OnPhaseBegin()
@@ -28,6 +32,7 @@ namespace Plate.Gameplay.Phases
             ingredientsToCalculate = plateRef.ReturnBaseIngredientsOnPlate();
             CalculateIngredientsOnlyScore();
             CalculateOrderOnlyScore();
+            CalculateSkillsOnlyScore();
             CalculateTotalScore();
             CalculateStars();
         }
@@ -61,12 +66,27 @@ namespace Plate.Gameplay.Phases
             {
                 orderOnlyScore += point;
             }
-            OnOrderCalculated?.Invoke(pointsFromOrder, orderOnlyScore);
+            int additionalOrderScore = PhasePlayerRef.GetOrder().CalculateOverallAdditionalPoints(ingredientsToCalculate);
+            orderOnlyScore += additionalOrderScore;
+            OnOrderCalculated?.Invoke(pointsFromOrder, additionalOrderScore, orderOnlyScore);
+        }
+
+        private void CalculateSkillsOnlyScore()
+        {
+            skillsOnlyScore = 0;
+            List<int> pointsFromSkills = skillsManager.CalculateSkillPointsForAllIngredients(ingredientsToCalculate);
+            foreach (int point in pointsFromSkills)
+            {
+                skillsOnlyScore += point;
+            }
+            int additionalSkillsScore = skillsManager.CalculateSkillOverallAdditionnalPoints(ingredientsToCalculate);
+            skillsOnlyScore += additionalSkillsScore;
+            OnSkillsCalculated?.Invoke(pointsFromSkills, additionalSkillsScore, skillsOnlyScore);
         }
 
         private void CalculateTotalScore()
         {
-            totalScore = ingredientsOnlyScore + orderOnlyScore;
+            totalScore = ingredientsOnlyScore + orderOnlyScore + skillsOnlyScore;
             OnTotalCalculated?.Invoke(totalScore);
         }
 

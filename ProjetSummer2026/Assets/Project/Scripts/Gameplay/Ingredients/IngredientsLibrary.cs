@@ -25,8 +25,12 @@ namespace Plate.Gameplay.Ingredients
         {
             foreach (BaseIngredient ingredient in SpawnedIngredients)
             {
-                Destroy(ingredient.gameObject);
+                if (ingredient.gameObject != null)
+                {
+                    Destroy(ingredient.gameObject);
+                }
             }
+            SpawnedIngredients = new List<BaseIngredient>();
         }
     }
 }

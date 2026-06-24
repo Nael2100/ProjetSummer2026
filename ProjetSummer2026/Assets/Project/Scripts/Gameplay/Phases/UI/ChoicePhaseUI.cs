@@ -9,21 +9,43 @@ namespace Plate.Gameplay.Phases.UI
     {
         [SerializeField] private ChoicePhase phase;
         [SerializeField] private List<ChoiceIngredientUI> ingredientsChoiceUI;
+        [SerializeField] private Transform chosenIngredientsParent;
         [SerializeField] private ChoiceTimerUI timerUI;
+        private List<ChoiceIngredientUI> chosenIngredientsUI;
 
         protected override void Awake()
         {
             base.Awake();
             basephase = phase;
+            phase.OnPhaseBeginEvent += SetUp;
             phase.DisplayChoicesEvent += DisplayIngredientsUI;
             phase.TimerStartedEvent += StartTimerUI;
             phase.AllIngredientsSelectedEvent += UnDisplayIngredientsUI;
             phase.AllIngredientsSelectedEvent += SetButton;
+            phase.OnIngredientSelected += DisplayChosenIngredientsUI;
+            chosenIngredientsUI = new List<ChoiceIngredientUI>();
+            for (int i = 0; i < chosenIngredientsParent.childCount; i++)
+            {
+                Transform child = chosenIngredientsParent.GetChild(i);
+                if (child.gameObject.GetComponent<ChoiceIngredientUI>() != null)
+                {
+                    Debug.Log("skub");
+                    chosenIngredientsUI.Add(child.gameObject.GetComponent<ChoiceIngredientUI>());
+                }
+            }
         }
 
+        private void SetUp(Phase phase)
+        {
+            foreach (ChoiceIngredientUI ui in chosenIngredientsUI)
+            {
+                ui.gameObject.SetActive(false);
+            }
+        }
         private void DisplayIngredientsUI(int index, BaseIngredient ingredient)
         {
             changePhaseButton.gameObject.SetActive(false);
+            
             if (ingredientsChoiceUI[index] != null)
             {
                 ChoiceIngredientUI currentUI = ingredientsChoiceUI[index];
@@ -45,6 +67,19 @@ namespace Plate.Gameplay.Phases.UI
         private void StartTimerUI()
         {
             timerUI.StartTimer();
+        }
+
+        private void DisplayChosenIngredientsUI(BaseIngredient ingredient)
+        {
+            foreach (ChoiceIngredientUI ui in chosenIngredientsUI)
+            {
+                if (!ui.gameObject.activeInHierarchy)
+                {
+                    ui.gameObject.SetActive(true);
+                    ui.Display(ingredient);
+                    break;
+                }
+            }
         }
     }
 }

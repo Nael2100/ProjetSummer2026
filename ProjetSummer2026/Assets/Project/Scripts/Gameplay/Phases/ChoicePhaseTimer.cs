@@ -8,7 +8,7 @@ namespace Plate.Gameplay.Phases
     public class ChoicePhaseTimer : MonoBehaviour
     {
                 
-        public event Action OnTimerEnd;
+        public event Action<bool> OnTimerEnd;
         public event Action<bool,float> OnTimerUpdate;
         
         private bool timerActive;
@@ -43,7 +43,7 @@ namespace Plate.Gameplay.Phases
                 OnTimerUpdate?.Invoke(timerActive, leftTime/timerDuration);
                 yield return null;
             }
-            OnTimerEnd?.Invoke();
+            OnTimerEnd?.Invoke(timerActive);
         }
     }
 }
