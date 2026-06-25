@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Plate.Core::Plate.Core.Scriptable.Ingredients.IngredientsDataVariants.IngredientTomatoData
   <ingredientName>k__BackingField: Tomato
   <description>k__BackingField: SAMPLE
+  <effectsDescriptions>k__BackingField:
+  - Add 1 for each Tomato on the plate, including this one
+  - Add 1 for each cheese on the plate
+  - 'Subtract 2 if Acidity is the main taste '
   <sprite>k__BackingField: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   <types>k__BackingField: 000000000100000002000000
   <tasteValues>k__BackingField:

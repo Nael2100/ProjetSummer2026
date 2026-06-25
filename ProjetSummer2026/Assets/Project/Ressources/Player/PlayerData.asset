@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Plate.Core::Plate.Core.Scriptable.Player.PlayerData
   inventorySize: 6
   choiceTime: 5
+  malusForWaste: -1

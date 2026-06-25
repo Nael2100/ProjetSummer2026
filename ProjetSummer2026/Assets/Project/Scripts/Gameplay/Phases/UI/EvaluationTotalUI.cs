@@ -11,6 +11,7 @@ namespace Plate.Gameplay.Phases.UI
         [SerializeField] private TextMeshProUGUI orderAdditionalScore;
         [SerializeField] private TextMeshProUGUI skillsOnlyScore;
         [SerializeField] private TextMeshProUGUI skillsAdditionalScore;
+        [SerializeField] private TextMeshProUGUI wastesScore;
         [SerializeField] private TextMeshProUGUI resultScore;
 
         public void Reset()
@@ -20,6 +21,7 @@ namespace Plate.Gameplay.Phases.UI
             orderAdditionalScore.text = "";
             skillsOnlyScore.text = "";
             skillsAdditionalScore.text = "";
+            wastesScore.text = "";
             resultScore.text = "";
         }
 
@@ -45,6 +47,11 @@ namespace Plate.Gameplay.Phases.UI
         public void DisplaySkillsOnlyScore(int score)
         {
             skillsOnlyScore.text = score.ToString();
+        }
+
+        public void DisplayWastesScore(int score)
+        {
+            wastesScore.text = score.ToString();
         }
 
         public void DisplayResultScore(int score)

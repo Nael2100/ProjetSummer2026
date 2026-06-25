@@ -36,9 +36,18 @@ namespace Plate.Gameplay.Ingredients
             return dataRef.sprite;
         }
 
+        public string ReturnDescription()
+        {
+            return dataRef.description;
+        }
         public string ReturnName()
         {
             return dataRef.name;
+        }
+
+        public List<string> ReturnEffects()
+        {
+            return dataRef.effectsDescriptions;
         }
 
         public void SetSlot(PlateSlot slot)

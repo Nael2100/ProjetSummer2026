@@ -8,5 +8,6 @@ namespace Plate.Core.Scriptable.Player
     {
         public int inventorySize = 4;
         public float choiceTime = 5f;
+        public int malusForWaste = -1;
     }
 }

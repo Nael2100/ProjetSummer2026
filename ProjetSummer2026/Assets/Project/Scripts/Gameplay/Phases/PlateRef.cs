@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,19 @@ namespace Plate.Gameplay.Phases
 {
     public class PlateRef : MonoBehaviour
     {
-        [SerializeField] private List<PlateSlot> plateSlots;
+        private List<PlateSlot> plateSlots;
         private List<BaseIngredient> ingredientsOnPlate;
         private IngredientsTastes mainTaste;
+
+        private void Awake()
+        {
+            plateSlots = new List<PlateSlot>();
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                plateSlots.Add(transform.GetChild(i).GetComponent<PlateSlot>());
+            }
+        }
+
         public List<PlateSlot> GetSlots()
         {
             return plateSlots;

@@ -11,10 +11,12 @@ namespace Plate.Gameplay.Phases
         private int pageNote;
         public void Associate(BaseIngredient ingredient, int newPage = -10)
         {
+            Debug.Log(ingredient);
             if (newPage >= 0)
             {
                 pageNote = newPage;
             }
+            currentIngredient = ingredient;
             occupied = true;
             ingredients[pageNote]= ingredient;
             ingredient.transform.SetParent(transform);
@@ -34,11 +36,6 @@ namespace Plate.Gameplay.Phases
             {
                 ingredients = new BaseIngredient[quantity];
             }
-        }
-
-        public void IngredientConnected(BaseIngredient ingredient)
-        {
-            ingredients[pageNote] = ingredient;
         }
 
         public void IngredientDisconnected(BaseIngredient ingredient)
@@ -81,6 +78,22 @@ namespace Plate.Gameplay.Phases
                 }
                 
             }
+        }
+
+        public int ReturnIngredientsOnItQuantity()
+        {
+            int total = 0;
+            for (int i = 0; i < ingredients.Length; i++)
+            {
+                if (ingredients[i] != null)
+                {
+                    if (ingredients[i].GetSlot() == this)
+                    {
+                        total++;
+                    }
+                }
+            }
+            return total;
         }
     }
 }

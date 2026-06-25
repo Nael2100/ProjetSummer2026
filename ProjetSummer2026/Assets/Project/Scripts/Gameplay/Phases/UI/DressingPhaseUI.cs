@@ -11,19 +11,25 @@ namespace Plate.Gameplay.Phases.UI
         [SerializeField] private DressingPhase phase;
         [SerializeField] private DressingInventoryUI inventory;
         [SerializeField] private DressingBookUI dressingBook;
+        [SerializeField] private OrderReminderUI orderReminder;
 
         protected override void Awake()
         {
             base.Awake();
             basephase = phase;
+            phase.OnPhaseBeginEvent += SetUp;
             phase.OnDisplayInventory += DisplayUI;
             phase.OnUndisplayInventory += UnSetUpBook;
             
         }
 
-        private void DisplayUI(List<BaseIngredient> ingredients)
+        private void SetUp(Phase phase)
         {
             changePhaseButton.gameObject.SetActive(false);
+            orderReminder.DisplayOrderReminder(phase.GetCurrentOrder(), false);
+        }
+        private void DisplayUI(List<BaseIngredient> ingredients)
+        {
             DisplayInventory(ingredients); 
             SetUpBook(ingredients);
             SetButton();

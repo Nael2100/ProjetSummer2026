@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Plate.Gameplay.Ingredients;
+using Plate.Gameplay.Phases.UI;
 using Plate.Gameplay.Player;
 using Plate.Gameplay.Skills;
 using UnityEngine;
@@ -12,17 +13,20 @@ namespace Plate.Gameplay.Phases
     public class EvaluationPhase : Phase
     {
         [SerializeField] private PlateRef plateRef;
+        [SerializeField] private DressingInventoryUI dressingInventory;
         [SerializeField] private SkillsManager skillsManager;
         private List<BaseIngredient> ingredientsToCalculate;
 
         private int ingredientsOnlyScore;
         private int orderOnlyScore;
         private int skillsOnlyScore;
+        private int wastedScore;
         private int totalScore;
         
         public event Action<List<BaseIngredient>,List<int>,int> OnIngredientsCalculated;
         public event Action<List<int>,int, int> OnOrderCalculated;
         public event Action<List<int>, int, int> OnSkillsCalculated; 
+        public event Action<int> OnWastesCalculated;
         public event Action<int> OnTotalCalculated; 
         public event Action<int> OnStarsCalculated;
         public override void OnPhaseBegin()
@@ -33,6 +37,7 @@ namespace Plate.Gameplay.Phases
             CalculateIngredientsOnlyScore();
             CalculateOrderOnlyScore();
             CalculateSkillsOnlyScore();
+            CalculateWastesScore();
             CalculateTotalScore();
             CalculateStars();
         }
@@ -84,9 +89,16 @@ namespace Plate.Gameplay.Phases
             OnSkillsCalculated?.Invoke(pointsFromSkills, additionalSkillsScore, skillsOnlyScore);
         }
 
+        private void CalculateWastesScore()
+        {
+            wastedScore = 0;
+            wastedScore = dressingInventory.ReturnOccupiedSlotsQuantity() * PhasePlayerRef.GetMalusForWaste();
+            OnWastesCalculated?.Invoke(wastedScore);
+        }
+
         private void CalculateTotalScore()
         {
-            totalScore = ingredientsOnlyScore + orderOnlyScore + skillsOnlyScore;
+            totalScore = ingredientsOnlyScore + orderOnlyScore + skillsOnlyScore + wastedScore;
             OnTotalCalculated?.Invoke(totalScore);
         }
 

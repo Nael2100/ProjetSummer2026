@@ -19,6 +19,7 @@ namespace Plate.Gameplay.Phases.UI
         private bool readyForOrderScore;
         private bool readyForTotalScore;
         private bool readyForSkills;
+        private int wastedScoreMemo;
 
         protected override void Awake()
         {
@@ -27,6 +28,7 @@ namespace Plate.Gameplay.Phases.UI
             phase.OnIngredientsCalculated += DisplayIngredientsResults;
             phase.OnOrderCalculated += DisplayOrderResults;
             phase.OnSkillsCalculated += DisplaySkillsResults;
+            phase.OnWastesCalculated += DisplayWastedScore;
             phase.OnTotalCalculated += DisplayTotalResults;
             phase.OnStarsCalculated += DisplayStars;
             phase.OnPhaseBeginEvent += ResetLines;
@@ -143,6 +145,8 @@ namespace Plate.Gameplay.Phases.UI
             {
                 yield return new WaitForSeconds(0.5f);
             }
+            evaluationTotalUI.DisplayWastesScore(wastedScoreMemo);
+            yield return new WaitForSeconds(1f);
             evaluationTotalUI.DisplayResultScore(total);
             evaluationStarsUI.ReadyToDisplay(true);
         }
@@ -151,11 +155,17 @@ namespace Plate.Gameplay.Phases.UI
         {
             GameObject line = Instantiate(linePrefab, linesParent);
             lines.Add(line.GetComponent<EvaluationLineUI>());
+            line.GetComponent<EvaluationLineUI>().ResetVisual();
         }
 
         private void DisplayStars(int amount)
         {
             evaluationStarsUI.DisplayStars(amount);
+        }
+
+        private void DisplayWastedScore(int amount)
+        {
+            wastedScoreMemo += amount;
         }
     }
 }

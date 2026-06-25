@@ -85,5 +85,10 @@ namespace Plate.Gameplay.Player
         {
             return starsAmount;
         }
+
+        public int GetMalusForWaste()
+        {
+            return data.malusForWaste;
+        }
     }
 }

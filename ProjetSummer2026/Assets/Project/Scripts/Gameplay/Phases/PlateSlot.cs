@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Plate.Gameplay.Ingredients;
 using UnityEngine;
 
@@ -5,7 +6,8 @@ namespace Plate.Gameplay.Phases
 {
     public class PlateSlot : MonoBehaviour
     {
-        private BaseIngredient ingredient;
+        [SerializeField] private List<PlateSlot> neighbors = new List<PlateSlot>();
+        protected BaseIngredient currentIngredient;
         protected bool occupied = false;
 
         public void ResetOccupation()
@@ -32,19 +34,19 @@ namespace Plate.Gameplay.Phases
                 if (!occupied)
                 {
                     occupied = true;
-                    ingredient = newIngredient;
+                    currentIngredient = newIngredient;
                 }
             }
             else
             {
                 occupied = false;
-                ingredient = null;
+                currentIngredient = null;
             }
         }
 
         public BaseIngredient ReturnIngredient()
         {
-            return ingredient;
+            return currentIngredient;
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Plate.Gameplay.Phases.UI
         [SerializeField] private List<ChoiceIngredientUI> ingredientsChoiceUI;
         [SerializeField] private Transform chosenIngredientsParent;
         [SerializeField] private ChoiceTimerUI timerUI;
+        [SerializeField] private OrderReminderUI orderReminderUI;
         private List<ChoiceIngredientUI> chosenIngredientsUI;
 
         protected override void Awake()
@@ -29,7 +30,6 @@ namespace Plate.Gameplay.Phases.UI
                 Transform child = chosenIngredientsParent.GetChild(i);
                 if (child.gameObject.GetComponent<ChoiceIngredientUI>() != null)
                 {
-                    Debug.Log("skub");
                     chosenIngredientsUI.Add(child.gameObject.GetComponent<ChoiceIngredientUI>());
                 }
             }
@@ -37,6 +37,7 @@ namespace Plate.Gameplay.Phases.UI
 
         private void SetUp(Phase phase)
         {
+            orderReminderUI.DisplayOrderReminder(phase.GetCurrentOrder());
             foreach (ChoiceIngredientUI ui in chosenIngredientsUI)
             {
                 ui.gameObject.SetActive(false);

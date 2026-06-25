@@ -111,5 +111,15 @@ namespace Plate.Gameplay.Phases.UI
         {
             inventoryIngredientsSpots[index].ShowIngredient(page);
         }
+
+        public int ReturnOccupiedSlotsQuantity()
+        {
+            int total = 0;
+            foreach (InventoryPlateSlot slot in inventoryIngredientsSpots)
+            {
+                total += slot.ReturnIngredientsOnItQuantity();
+            }
+            return total;
+        }
     }
 }

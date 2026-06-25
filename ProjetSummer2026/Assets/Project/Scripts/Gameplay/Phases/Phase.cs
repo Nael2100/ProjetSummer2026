@@ -1,4 +1,5 @@
 using System;
+using Plate.Gameplay.Orders;
 using Plate.Gameplay.Player;
 using UnityEngine;
 
@@ -41,6 +42,11 @@ namespace Plate.Gameplay.Phases
         protected void AskToChangePhase()
         {
             AskToChangePhaseEvent?.Invoke(this);
+        }
+
+        public BaseOrder GetCurrentOrder()
+        {
+            return PhasePlayerRef.GetOrder();
         }
     }
 }
