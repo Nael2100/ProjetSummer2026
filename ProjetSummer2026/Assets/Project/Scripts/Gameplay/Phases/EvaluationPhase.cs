@@ -109,6 +109,7 @@ namespace Plate.Gameplay.Phases
             {
                 if (totalScore >= PhasePlayerRef.GetGrade().pointsForStars[i])
                 {
+                    Debug.Log(totalScore +" greater than"+ PhasePlayerRef.GetGrade().pointsForStars[i]);
                     stars++;
                 }
                 else

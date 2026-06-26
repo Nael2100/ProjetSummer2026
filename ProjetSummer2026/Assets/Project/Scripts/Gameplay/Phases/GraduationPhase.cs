@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Plate.Core.Scriptable.Grade;
 using Plate.Gameplay.Grades;
 using Plate.Gameplay.Player;
+using Plate.Gameplay.Save;
 using Plate.Gameplay.Skills;
 using UnityEngine;
 
@@ -22,8 +23,9 @@ namespace Plate.Gameplay.Phases
         protected override void Awake()
         {
             base.Awake();
-            daysLeft = daysToObtain;
-            
+            daysLeft = SaveManager.Instance.daysLeft;
+            currentGrade = gradesManager.ReturnDataFromTitle(SaveManager.Instance.playerGrade);
+            skillsManager.AddSkillsFromTitle(SaveManager.Instance.playerSkills);
         }
 
         private void Start()
@@ -39,6 +41,7 @@ namespace Plate.Gameplay.Phases
             }
             PhasePlayerRef.SetGrade(gradesManager.ReturnFirstGrade());
             PhasePlayerRef.SetDaysLeft(daysLeft);
+            SetPlayerSkillsNames();
             currentGrade = PhasePlayerRef.GetGrade();
         }
 
@@ -54,7 +57,20 @@ namespace Plate.Gameplay.Phases
         public override void OnPhaseEnd()
         {
             base.OnPhaseEnd();
+            SetPlayerSkillsNames();
             Debug.Log("GraduationPhaseEnd");
+        }
+
+        private void SetPlayerSkillsNames()
+        {
+            List<BaseSkill> baseSkills = skillsManager.GetSkills();
+            int skillsCount = baseSkills.Count;
+            string[] newSkills = new string[skillsCount];
+            for (int i = 0; i < skillsCount; i++)
+            {
+                newSkills[i] = baseSkills[i].GetName();
+            }
+            PhasePlayerRef.SetSkills(newSkills);
         }
 
         private void CheckGradeProgression()
@@ -69,6 +85,7 @@ namespace Plate.Gameplay.Phases
                     PhasePlayerRef.SetGrade(gradesManager.ReturnNextGrade(currentGrade));
                     currentGrade = PhasePlayerRef.GetGrade();
                     daysLeft += daysToObtain;
+                    PhasePlayerRef.UpgradeInventoryCapacity(currentGrade.inventorySIze);
                     OnProgressionChecked?.Invoke(PhasePlayerRef.GetStars(), currentGrade, true, daysLeft);
                 }
                 else

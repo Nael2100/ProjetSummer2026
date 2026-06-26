@@ -29,5 +29,18 @@ namespace Plate.Gameplay.Grades
         {
             return grades[grades.IndexOf(grade)+1];
         }
+
+        public GradeData ReturnDataFromTitle(string title)
+        {
+            foreach (GradeData grade in grades)
+            {
+                if (grade.gradeName == title)
+                {
+                    return grade;
+                }
+            }
+
+            return ReturnFirstGrade();
+        }
     }
 }

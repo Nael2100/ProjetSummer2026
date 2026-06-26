@@ -65,5 +65,19 @@ namespace Plate.Gameplay.Skills
             }
             return points;
         }
+
+        public void AddSkillsFromTitle(string[] skillsNames)
+        {
+            foreach (string skillName in skillsNames)
+            {
+                foreach (BaseSkill skill in availableSkills)
+                {
+                    if (skill.GetName() == skillName)
+                    {
+                        playerSkills.Add(skill);
+                    }
+                }
+            }
+        }
     }
 }

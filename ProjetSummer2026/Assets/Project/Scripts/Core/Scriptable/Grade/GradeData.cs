@@ -13,5 +13,7 @@ namespace Plate.Core.Scriptable.Grade
         public int requiredStarsToObtain {get; private set;}
         [field: SerializeField]
         public int[] pointsForStars {get; private set;}
+        [field: SerializeField]
+        public int inventorySIze {get; private set;}
     }
 }

@@ -20,10 +20,10 @@ namespace Plate.Gameplay.Phases.UI
             phase.OnDisplayInfos += DisplayInfos;
         }
 
-        private void DisplayInfos(int starsQuantity, int starsNeeded, int daysLeft, Sprite nextGrade)
+        private void DisplayInfos(int starsQuantity, int starsNeeded, int daysLeft, Sprite nextGrade, string playerName)
         {
             SetButton();
-            playerNameText.text = "Chef";
+            playerNameText.text = playerName;
             playerScoreText.text = starsQuantity.ToString();
             playerObjectiveText.text = daysLeft.ToString() + " Days left to obtain " + starsNeeded.ToString() + " stars";
             playerGradeImage.sprite = nextGrade;

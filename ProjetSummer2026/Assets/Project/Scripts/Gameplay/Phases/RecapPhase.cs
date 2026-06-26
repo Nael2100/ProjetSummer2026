@@ -8,7 +8,7 @@ namespace Plate.Gameplay.Phases
     public class RecapPhase : Phase
     {
         [SerializeField] private GradesManager gradesManager;
-        public event Action<int, int, int, Sprite> OnDisplayInfos;
+        public event Action<int, int, int, Sprite, string> OnDisplayInfos;
         public override void OnPhaseBegin()
         {
             base.OnPhaseBegin();
@@ -22,7 +22,8 @@ namespace Plate.Gameplay.Phases
             int starsNeeded = gradesManager.ReturnStarsNeeded(PhasePlayerRef.GetGrade());
             int daysLeft = PhasePlayerRef.GetDaysLeft();
             Sprite gradeSprite = PhasePlayerRef.GetGrade().gradeIcon;
-            OnDisplayInfos?.Invoke(starsQuantity, starsNeeded, daysLeft, gradeSprite);
+            string playerName = PhasePlayerRef.GetPlayerName();
+            OnDisplayInfos?.Invoke(starsQuantity, starsNeeded, daysLeft, gradeSprite, playerName);
         }
     }
 }

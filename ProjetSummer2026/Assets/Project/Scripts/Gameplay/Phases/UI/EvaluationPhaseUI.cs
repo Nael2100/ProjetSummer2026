@@ -44,6 +44,7 @@ namespace Plate.Gameplay.Phases.UI
             }
             readyForOrderScore = false;
             readyForTotalScore = false;
+            readyForSkills = false;
             evaluationStarsUI.ReadyToDisplay(false);
             evaluationTotalUI.Reset();
         }
@@ -129,6 +130,7 @@ namespace Plate.Gameplay.Phases.UI
             yield return new WaitForSeconds(0.5f);
             while (i < scores.Count)
             {
+                Debug.Log("iDisplayed");
                 lines[i].DisplayEvaluationLineForSkills(scores[i]);
                 i++;
                 yield return new WaitForSeconds(1f);

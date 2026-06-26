@@ -4,6 +4,8 @@ using Plate.Core.Scriptable.Grade;
 using Plate.Core.Scriptable.Player;
 using Plate.Gameplay.Ingredients;
 using Plate.Gameplay.Orders;
+using Plate.Gameplay.Save;
+using Plate.Gameplay.Skills;
 using UnityEngine;
 
 namespace Plate.Gameplay.Player
@@ -17,13 +19,16 @@ namespace Plate.Gameplay.Player
         private BaseOrder currentOrder;
         private GradeData currentGrade;
         private int daysLeft;
+        private string[] skills = new string[0];
+        private string playerName = "Tartempion";
         
         private int starsAmount;
         
         private void Awake()
         {
-            InventorySize = data.inventorySize;
+            starsAmount = SaveManager.Instance.playerStars;
             ChoiceTimerDuration = data.choiceTime;
+            playerName = SaveManager.Instance.playerName;
         }
 
         public void EmptyInventory()
@@ -67,9 +72,8 @@ namespace Plate.Gameplay.Player
 
         public void SetGrade(GradeData grade)
         {
-            Debug.Log(grade);
             currentGrade = grade;
-            
+            InventorySize = currentGrade.inventorySIze;
         }
 
         public GradeData GetGrade()
@@ -100,6 +104,26 @@ namespace Plate.Gameplay.Player
         public int GetDaysLeft()
         {
             return daysLeft;
+        }
+
+        public void UpgradeInventoryCapacity(int size)
+        {
+            InventorySize = size;
+        }
+
+        public void SetSkills(string[] newSkills)
+        {
+            skills = newSkills;
+        }
+
+        public string[] GetSkills()
+        {
+            return skills;
+        }
+
+        public string GetPlayerName()
+        {
+            return playerName;
         }
     }
 }
