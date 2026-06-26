@@ -12,6 +12,7 @@ namespace Plate.Gameplay.Phases.UI
         [SerializeField] private List<TextMeshProUGUI> tastesScore;
         public void Display(BaseIngredient ingredient)
         {
+            gameObject.SetActive(true);
             for (int i = 0; i < types.Count; i++)
             {
                 types[i].Hide();

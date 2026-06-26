@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Plate.Gameplay.Ingredients;
+using Plate.Gameplay.Orders;
 using Plate.Gameplay.Player;
 using UnityEngine;
 
@@ -20,13 +21,14 @@ namespace Plate.Gameplay.Phases.UI
             phase.OnPhaseBeginEvent += SetUp;
             phase.OnDisplayInventory += DisplayUI;
             phase.OnUndisplayInventory += UnSetUpBook;
-            
+            orderReminder.OnOrderClicked += DisplayOrderOnBook;
         }
 
         private void SetUp(Phase phase)
         {
             changePhaseButton.gameObject.SetActive(false);
             orderReminder.DisplayOrderReminder(phase.GetCurrentOrder(), false);
+            dressingBook.DisplayOrder(phase.GetCurrentOrder());
         }
         private void DisplayUI(List<BaseIngredient> ingredients)
         {
@@ -48,6 +50,11 @@ namespace Plate.Gameplay.Phases.UI
         private void UnSetUpBook(List<BaseIngredient> ingredients)
         {
             dressingBook.DeassociateIngredients(ingredients);
+        }
+
+        private void DisplayOrderOnBook(BaseOrder order)
+        {
+            dressingBook.DisplayOrder(order);
         }
         
     }

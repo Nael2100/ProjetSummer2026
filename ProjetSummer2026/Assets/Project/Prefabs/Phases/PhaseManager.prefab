@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Plate.Gameplay::Plate.Gameplay.Phases.OrderPhase
   phaseUI: {fileID: 0}
+  ordersLibrary: {fileID: 0}
 --- !u!1 &2673448265149051582
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,6 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Plate.Gameplay::Plate.Gameplay.Phases.DressingPhase
   phaseUI: {fileID: 0}
+  plateRef: {fileID: 0}
 --- !u!1 &3491639407221488769
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,6 +215,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4165971114221755609}
   - {fileID: 598628177274647430}
   - {fileID: 7354394270840434500}
   - {fileID: 5651364569721462799}
@@ -232,12 +235,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7155be7807581864bb8dbe55b8d950aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Plate.Gameplay::Plate.Gameplay.Phases.PhaseManager
+  player: {fileID: 0}
   phasesInOrder:
+  - {fileID: 9079626893896720982}
   - {fileID: 8381392458403900573}
   - {fileID: 6170499004118990631}
   - {fileID: 4343105080879190370}
   - {fileID: 362861075066691248}
   - {fileID: 8684577313735734086}
+--- !u!1 &3694939626816085748
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4165971114221755609}
+  - component: {fileID: 9079626893896720982}
+  m_Layer: 0
+  m_Name: RecapPhase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4165971114221755609
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3694939626816085748}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3780927056570726683}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9079626893896720982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3694939626816085748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5d88d296d2a449ca8b925dc78390838, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Plate.Gameplay::Plate.Gameplay.Phases.RecapPhase
+  phaseUI: {fileID: 0}
+  gradesManager: {fileID: 0}
 --- !u!1 &5494459720645002782
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,6 +334,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Plate.Gameplay::Plate.Gameplay.Phases.EvaluationPhase
   phaseUI: {fileID: 0}
+  plateRef: {fileID: 0}
+  dressingInventory: {fileID: 0}
+  skillsManager: {fileID: 0}
 --- !u!1 &7734080964457259896
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,3 +382,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Plate.Gameplay::Plate.Gameplay.Phases.GraduationPhase
   phaseUI: {fileID: 0}
+  gradesManager: {fileID: 0}
+  skillsManager: {fileID: 0}
+  daysToObtain: 0

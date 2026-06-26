@@ -23,6 +23,7 @@ namespace Plate.Gameplay.Phases
         {
             base.Awake();
             daysLeft = daysToObtain;
+            
         }
 
         private void Start()
@@ -37,6 +38,7 @@ namespace Plate.Gameplay.Phases
                 yield return null;
             }
             PhasePlayerRef.SetGrade(gradesManager.ReturnFirstGrade());
+            PhasePlayerRef.SetDaysLeft(daysLeft);
             currentGrade = PhasePlayerRef.GetGrade();
         }
 
@@ -74,6 +76,7 @@ namespace Plate.Gameplay.Phases
                     OnProgressionChecked?.Invoke(PhasePlayerRef.GetStars(), gradesManager.ReturnNextGrade(currentGrade), false,daysLeft);
                 }
             }
+            PhasePlayerRef.SetDaysLeft(daysLeft);
         }
 
         public void SkillUpgrade()

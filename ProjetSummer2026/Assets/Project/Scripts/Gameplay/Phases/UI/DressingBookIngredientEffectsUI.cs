@@ -11,6 +11,7 @@ namespace Plate.Gameplay.Phases.UI
 
         public void Display(BaseIngredient ingredient)
         {
+            gameObject.SetActive(true);
             List<string> effects = ingredient.ReturnEffects();
             for (int i = 0; i < effectsTexts.Count; i++)
             {

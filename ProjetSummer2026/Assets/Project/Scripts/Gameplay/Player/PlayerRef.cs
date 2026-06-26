@@ -16,6 +16,7 @@ namespace Plate.Gameplay.Player
         private float ChoiceTimerDuration;
         private BaseOrder currentOrder;
         private GradeData currentGrade;
+        private int daysLeft;
         
         private int starsAmount;
         
@@ -89,6 +90,16 @@ namespace Plate.Gameplay.Player
         public int GetMalusForWaste()
         {
             return data.malusForWaste;
+        }
+
+        public void SetDaysLeft(int newDaysLeft)
+        {
+            daysLeft = newDaysLeft;
+        }
+
+        public int GetDaysLeft()
+        {
+            return daysLeft;
         }
     }
 }

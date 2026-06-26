@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Plate.Gameplay.Ingredients;
+using Plate.Gameplay.Orders;
 using Plate.Gameplay.Player;
 using TMPro;
 using UnityEngine;
@@ -50,18 +51,31 @@ namespace Plate.Gameplay.Phases.UI
             SwitchToEffects();
         }
 
+        public void DisplayOrder(BaseOrder order)
+        {
+            title.text = order.ReturnOrderTitle();
+            description.text = order.ReturnOrderDescription();
+            HideAll();
+            OrderUI.Display(order);
+        }
+
         private void SwitchToEffects()
         {
-            TastesUI.gameObject.SetActive(false);
-            EffectsUI.gameObject.SetActive(true);
+            HideAll();
             EffectsUI.Display(currentIngredient);
         }
 
         private void SwitchToTastes()
         {
-            TastesUI.gameObject.SetActive(true);
-            EffectsUI.gameObject.SetActive(false);
+            HideAll();
             TastesUI.Display(currentIngredient);
+        }
+
+        private void HideAll()
+        {
+            TastesUI.gameObject.SetActive(false);
+            EffectsUI.gameObject.SetActive(false);
+            OrderUI.gameObject.SetActive(false);
         }
     }
 }

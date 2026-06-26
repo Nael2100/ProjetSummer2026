@@ -12,7 +12,7 @@ namespace Plate.Gameplay.Phases.UI
             changePhaseButton.gameObject.SetActive(false);
         }
 
-        protected virtual void SetButton()
+        protected void SetButton()
         {
             changePhaseButton.gameObject.SetActive(true);
             changePhaseButton.SetPhase(basephase);
