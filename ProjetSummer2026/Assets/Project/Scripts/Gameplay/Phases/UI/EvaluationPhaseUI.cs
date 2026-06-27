@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Plate.Gameplay.Ingredients;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Plate.Gameplay.Phases.UI
 {
@@ -12,6 +13,7 @@ namespace Plate.Gameplay.Phases.UI
         [SerializeField] private EvaluationPhase phase;
         [SerializeField] private Transform linesParent;
         [SerializeField] private GameObject linePrefab;
+        [SerializeField] private OrderReminderUI orderReminderUI;
         [SerializeField] private EvaluationTotalUI evaluationTotalUI;
         [SerializeField] private EvaluationStarsUI evaluationStarsUI;
         
@@ -25,6 +27,7 @@ namespace Plate.Gameplay.Phases.UI
         {
             base.Awake();
             basephase = phase;
+            phase.OnPhaseBeginEvent += SetUp;
             phase.OnIngredientsCalculated += DisplayIngredientsResults;
             phase.OnOrderCalculated += DisplayOrderResults;
             phase.OnSkillsCalculated += DisplaySkillsResults;
@@ -33,6 +36,11 @@ namespace Plate.Gameplay.Phases.UI
             phase.OnStarsCalculated += DisplayStars;
             phase.OnPhaseBeginEvent += ResetLines;
             evaluationStarsUI.OnStarsCompleted += SetButton;
+        }
+
+        private void SetUp(Phase phase)
+        {
+            orderReminderUI.DisplayOrderReminder(phase.GetCurrentOrder(), false, true);
         }
         private void ResetLines(Phase phase)
         {
@@ -81,6 +89,7 @@ namespace Plate.Gameplay.Phases.UI
                     lines[i].ResetVisual();
                 }
                 lines[i].gameObject.SetActive(true);
+                AdjustScroll(i);
                 lines[i].DisplayEvaluationLineImage(ingredients[i]);
                 i++;
                 yield return new WaitForSeconds(0.5f);
@@ -94,11 +103,27 @@ namespace Plate.Gameplay.Phases.UI
                     AddLine();
                 }
                 lines[i].DisplayEvaluationLineForIngredient(scores[i]);
+                AdjustScroll(i);
                 i++;
                 yield return new WaitForSeconds(1f);
             }
             evaluationTotalUI.DisplayIngredientsOnlyScore(total);
             readyForOrderScore = true;
+        }
+
+        private void AdjustScroll(int index)
+        {
+            index++;
+            Vector2 newScrollPosition;
+            float unMoveSize = linesParent.transform.parent.GetComponent<RectTransform>().sizeDelta.y;
+            float spacing = linesParent.GetComponent<VerticalLayoutGroup>().spacing;
+            newScrollPosition = new Vector2(0, (index * linePrefab.GetComponent<RectTransform>().sizeDelta.y) + (spacing*index-1) - unMoveSize);
+            if (newScrollPosition.y <= 0)
+            {
+                newScrollPosition = Vector2.zero;
+            }
+            Debug.Log(newScrollPosition);
+            linesParent.GetComponent<RectTransform>().anchoredPosition = newScrollPosition;
         }
         IEnumerator DisplayOrderResultsOneByeOne(List<int> scores,  int additional, int total)
         {
@@ -111,6 +136,7 @@ namespace Plate.Gameplay.Phases.UI
             while (i < scores.Count)
             {
                 lines[i].DisplayEvaluationLineForOrder(scores[i]);
+                AdjustScroll(i);
                 i++;
                 yield return new WaitForSeconds(1f);
             }
@@ -130,14 +156,15 @@ namespace Plate.Gameplay.Phases.UI
             yield return new WaitForSeconds(0.5f);
             while (i < scores.Count)
             {
-                Debug.Log("iDisplayed");
                 lines[i].DisplayEvaluationLineForSkills(scores[i]);
+                AdjustScroll(i);
                 i++;
                 yield return new WaitForSeconds(1f);
             }
             evaluationTotalUI.DisplaySkillsAdditionalScore(additional);
             yield return new WaitForSeconds(1f);
             evaluationTotalUI.DisplaySkillsOnlyScore(total);
+            yield return new WaitForSeconds(1f);
             readyForTotalScore = true;
         }
 
@@ -162,7 +189,7 @@ namespace Plate.Gameplay.Phases.UI
 
         private void DisplayStars(int amount)
         {
-            evaluationStarsUI.DisplayStars(amount);
+            evaluationStarsUI.DisplayStars(amount, phase.GetCurrentOrder().ReturnOrderClientData().reactionsToStars[amount]);
         }
 
         private void DisplayWastedScore(int amount)

@@ -1,3 +1,4 @@
+using Plate.Core.Scriptable.Grade;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ namespace Plate.Gameplay.Phases.UI
         [SerializeField] private TextMeshProUGUI playerNameText;
         [SerializeField] private TextMeshProUGUI playerScoreText;
         [SerializeField] private TextMeshProUGUI playerObjectiveText;
+        [SerializeField] private TextMeshProUGUI playerGradeText;
         [SerializeField] private Image playerGradeImage;
 
         protected override void Awake()
@@ -20,14 +22,14 @@ namespace Plate.Gameplay.Phases.UI
             phase.OnDisplayInfos += DisplayInfos;
         }
 
-        private void DisplayInfos(int starsQuantity, int starsNeeded, int daysLeft, Sprite nextGrade, string playerName)
+        private void DisplayInfos(int starsQuantity, int starsNeeded, int daysLeft, GradeData currentGrade, string playerName)
         {
             SetButton();
             playerNameText.text = playerName;
             playerScoreText.text = starsQuantity.ToString();
             playerObjectiveText.text = daysLeft.ToString() + " Days left to obtain " + starsNeeded.ToString() + " stars";
-            playerGradeImage.sprite = nextGrade;
-            
+            playerGradeImage.sprite = currentGrade.gradeIcon;
+            playerGradeText.text = currentGrade.gradeName;
         }
     }
 }

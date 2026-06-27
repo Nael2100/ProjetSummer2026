@@ -27,7 +27,7 @@ namespace Plate.Gameplay.Phases.UI
         private void SetUp(Phase phase)
         {
             changePhaseButton.gameObject.SetActive(false);
-            orderReminder.DisplayOrderReminder(phase.GetCurrentOrder(), false);
+            orderReminder.DisplayOrderReminder(phase.GetCurrentOrder(), false, true);
             dressingBook.DisplayOrder(phase.GetCurrentOrder());
         }
         private void DisplayUI(List<BaseIngredient> ingredients)

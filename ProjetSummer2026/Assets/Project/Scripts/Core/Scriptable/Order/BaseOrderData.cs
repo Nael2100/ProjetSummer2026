@@ -12,5 +12,7 @@ namespace Plate.Core.Scriptable.Order
         public string Description {get; private set;}
         [field : SerializeField]
         public List<string> Effects {get; private set;}
+        [field : SerializeField]
+        public BaseClientData Client {get; private set;}
     }
 }

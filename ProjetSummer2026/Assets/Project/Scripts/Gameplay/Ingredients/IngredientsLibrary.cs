@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Plate.Core.Scriptable.Ingredients;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Plate.Gameplay.Ingredients
 {
@@ -15,7 +16,9 @@ namespace Plate.Gameplay.Ingredients
             {
                 GameObject newIngredient = Instantiate(IngredientsList[Random.Range(0, IngredientsList.Count)].gameObject, transform);
                 newIngredient.name = newIngredient.GetComponent<BaseIngredient>().ReturnName();
-                SpawnedIngredients.Add(newIngredient.GetComponent<BaseIngredient>());
+                BaseIngredient newIngredientToAdd = newIngredient.GetComponent<BaseIngredient>();
+                newIngredient.GetComponent<Image>().sprite = newIngredientToAdd.ReturnImage();
+                SpawnedIngredients.Add(newIngredientToAdd);
                 return newIngredient.GetComponent<BaseIngredient>();
             }
             return null;

@@ -21,13 +21,16 @@ namespace Plate.Gameplay.Save
         
         [SerializeField] private PlayerRef playerRef;
 
-        private void Awake()
+        public SaveManager()
         {
             if (Instance == null)
             {
                 Instance = this;
-                LoadSave();
             }
+        }
+        private void Awake()
+        {
+            LoadSave();
         }
 
         public void CreateSave()

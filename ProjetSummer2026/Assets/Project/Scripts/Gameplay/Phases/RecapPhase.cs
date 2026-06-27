@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Plate.Core.Scriptable.Grade;
 using Plate.Gameplay.Grades;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace Plate.Gameplay.Phases
     public class RecapPhase : Phase
     {
         [SerializeField] private GradesManager gradesManager;
-        public event Action<int, int, int, Sprite, string> OnDisplayInfos;
+        public event Action<int, int, int, GradeData, string> OnDisplayInfos;
         public override void OnPhaseBegin()
         {
             base.OnPhaseBegin();
@@ -21,9 +22,9 @@ namespace Plate.Gameplay.Phases
             int starsQuantity = PhasePlayerRef.GetStars();
             int starsNeeded = gradesManager.ReturnStarsNeeded(PhasePlayerRef.GetGrade());
             int daysLeft = PhasePlayerRef.GetDaysLeft();
-            Sprite gradeSprite = PhasePlayerRef.GetGrade().gradeIcon;
+            GradeData currentGrade = PhasePlayerRef.GetGrade();
             string playerName = PhasePlayerRef.GetPlayerName();
-            OnDisplayInfos?.Invoke(starsQuantity, starsNeeded, daysLeft, gradeSprite, playerName);
+            OnDisplayInfos?.Invoke(starsQuantity, starsNeeded, daysLeft, currentGrade, playerName);
         }
     }
 }

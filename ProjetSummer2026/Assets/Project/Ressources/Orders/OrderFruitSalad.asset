@@ -16,4 +16,5 @@ MonoBehaviour:
   <Description>k__BackingField: The Prince demands fruit, some fresh food !
   <Effects>k__BackingField:
   - Add 1 for each Fruit in the plate
+  <Client>k__BackingField: {fileID: 11400000, guid: 4d2bb1ff799407f47a896f6ce5e64d31, type: 2}
   pointsForFruits: 1

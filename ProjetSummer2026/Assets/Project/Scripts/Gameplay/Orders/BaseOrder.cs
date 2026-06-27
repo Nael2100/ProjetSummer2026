@@ -27,6 +27,11 @@ namespace Plate.Gameplay.Orders
             return dataRef.Effects;
         }
 
+        public BaseClientData ReturnOrderClientData()
+        {
+            return dataRef.Client;
+        }
+
         public abstract List<int> CalculatePoints(List<BaseIngredient> ingredients);
         public abstract int CalculateOverallAdditionalPoints(List<BaseIngredient> ingredients);
 

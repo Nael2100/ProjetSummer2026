@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 namespace Plate.Gameplay.Phases.UI
@@ -7,6 +8,7 @@ namespace Plate.Gameplay.Phases.UI
     public class EvaluationStarsUI : MonoBehaviour
     {
         [SerializeField] private GameObject[] stars;
+        [SerializeField] private GameObject clientReaction;
         private bool ready = false;
 
         public event Action OnStarsCompleted;
@@ -17,14 +19,15 @@ namespace Plate.Gameplay.Phases.UI
             {
                 star.SetActive(false);
             }
+            clientReaction.SetActive(false);
         }
 
-        public void DisplayStars(int amount)
+        public void DisplayStars(int amount, string reaction)
         {
-            StartCoroutine(DisplayStarsOneByOne(amount));
+            StartCoroutine(DisplayStarsOneByOne(amount, reaction));
         }
 
-        IEnumerator DisplayStarsOneByOne(int amount)
+        IEnumerator DisplayStarsOneByOne(int amount, string reaction)
         {
             while (!ready)
             {
@@ -36,7 +39,14 @@ namespace Plate.Gameplay.Phases.UI
                 stars[i].SetActive(true);
                 yield return new WaitForSeconds(1f);
             }
+            DisplayClientReaction(reaction);
             OnStarsCompleted?.Invoke();
+        }
+        
+        public void DisplayClientReaction(string text)
+        {
+            clientReaction.SetActive(true);
+            clientReaction.GetComponentInChildren<TextMeshProUGUI>().text = text;
         }
     }
 }

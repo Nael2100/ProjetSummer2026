@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Plate.Gameplay.Player;
+using Plate.Gameplay.Save;
 using UnityEngine;
 
 namespace Plate.Gameplay.Phases
@@ -30,6 +31,7 @@ namespace Plate.Gameplay.Phases
             CurrentPhaseIndex += 1;
             if (CurrentPhaseIndex >= phasesInOrder.Count)
             {
+                SaveManager.Instance.CreateSave();
                 CurrentPhaseIndex = 0;
             }
             CurrentPhase = phasesInOrder[CurrentPhaseIndex];

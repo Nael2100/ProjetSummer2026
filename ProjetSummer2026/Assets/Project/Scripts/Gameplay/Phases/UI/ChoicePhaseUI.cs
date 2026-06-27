@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Plate.Gameplay.Ingredients;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Plate.Gameplay.Phases.UI
 {
@@ -12,6 +13,9 @@ namespace Plate.Gameplay.Phases.UI
         [SerializeField] private Transform chosenIngredientsParent;
         [SerializeField] private ChoiceTimerUI timerUI;
         [SerializeField] private OrderReminderUI orderReminderUI;
+        [SerializeField] private GameObject GetReadyInfoUI;
+        [SerializeField] private Button StartButton;
+        
         private List<ChoiceIngredientUI> chosenIngredientsUI;
 
         protected override void Awake()
@@ -35,18 +39,21 @@ namespace Plate.Gameplay.Phases.UI
             }
         }
 
-        private void SetUp(Phase phase)
+        private void SetUp(Phase newPhase)
         {
-            orderReminderUI.DisplayOrderReminder(phase.GetCurrentOrder());
+            GetReadyInfoUI.SetActive(true);
+            orderReminderUI.DisplayOrderReminder(phase.GetCurrentOrder(), true, true);
             foreach (ChoiceIngredientUI ui in chosenIngredientsUI)
             {
                 ui.gameObject.SetActive(false);
             }
+            UnDisplayIngredientsUI();
+            StartButton.onClick.AddListener(phase.SelectIngredients);
         }
         private void DisplayIngredientsUI(int index, BaseIngredient ingredient)
         {
             changePhaseButton.gameObject.SetActive(false);
-            
+            GetReadyInfoUI.SetActive(false);
             if (ingredientsChoiceUI[index] != null)
             {
                 ChoiceIngredientUI currentUI = ingredientsChoiceUI[index];

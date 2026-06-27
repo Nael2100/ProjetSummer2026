@@ -11,9 +11,7 @@ namespace Plate.Gameplay.Phases.UI
     public class OrderPhaseUI : PhaseUI
     {
         [SerializeField] private OrderPhase phase;
-        [SerializeField] private TextMeshProUGUI titleText;
-        [SerializeField] private TextMeshProUGUI descriptionText;
-        [SerializeField] private List<TextMeshProUGUI> effectTexts;
+        [SerializeField] private OrderReminderUI orderReminderUI;
 
         protected override void Awake()
         {
@@ -26,20 +24,7 @@ namespace Plate.Gameplay.Phases.UI
 
         private void DisplayOrder(BaseOrder order)
         {
-            titleText.text = order.ReturnOrderTitle();
-            descriptionText.text = order.ReturnOrderDescription();
-            int effectsToDisplay = order.ReturnOrderEffectsTexts().Count;
-            for (int i = 0; i < effectTexts.Count; i++)
-            {
-                if (i < effectsToDisplay)
-                {
-                    effectTexts[i].text = order.ReturnOrderEffectsTexts()[i];
-                }
-                else
-                {
-                    effectTexts[i].text = "";
-                }
-            }
+            orderReminderUI.DisplayOrderReminder(order, true, true);
             SetButton();
         }
     }

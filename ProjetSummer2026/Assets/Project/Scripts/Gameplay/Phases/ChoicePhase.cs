@@ -20,7 +20,6 @@ namespace Plate.Gameplay.Phases
         public event Action TimerStartedEvent;
         public event Action AllIngredientsSelectedEvent;
         public event Action<BaseIngredient> OnIngredientSelected;
-
         protected override void Awake()
         {
             base.Awake();
@@ -32,7 +31,6 @@ namespace Plate.Gameplay.Phases
             base.OnPhaseBegin();
             Debug.Log("ChoicePhaseStart");
             ResetIngredients();
-            SelectIngredients();
         }
 
         public override void OnPhaseEnd()
@@ -47,7 +45,7 @@ namespace Plate.Gameplay.Phases
             PhasePlayerRef.EmptyInventory();
         }
 
-        private void SelectIngredients()
+        public void SelectIngredients()
         {
             if (!activePhase)
             {
